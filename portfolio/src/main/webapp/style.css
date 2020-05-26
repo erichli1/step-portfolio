@@ -4,6 +4,7 @@
   margin-top: 5vh;
   margin-bottom: 5vh;
   width: 650px;
+  font-size: 20px;
 }
 
 #greeting-container {
@@ -13,4 +14,8 @@
 #carousel-container {
     max-width: 50%;
     margin-left: 0;
+}
+
+#background {
+    background-color: #AEECEF;
 }
