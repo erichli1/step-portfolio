@@ -15,14 +15,14 @@
 /**
  * Adds a random greeting to the page.
  */
-function addRandomGreeting() {
-  const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
+function addRandomQuote() {
+  const quotes =
+      ['[Human\'s] great skill is their capacity to escalate. (The Book Thief)', 'As flies to wanton boys, are we to the gods, they kill us for sport. (Gloucester in King Lear)', 'When we are headed the wrong way, the last thing we need is progress. (Nick Bostrom)', 'Things don\'t have to be perfect to be wonderful. (NYTimes The Best Advice You\'ve Ever Received)'];
 
   // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
+  const quote = quotes[Math.floor(Math.random() * quotes.length)];
 
   // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
-  greetingContainer.innerText = greeting;
+  const quoteContainer = document.getElementById('quote-container');
+  quoteContainer.innerText = quote;
 }
