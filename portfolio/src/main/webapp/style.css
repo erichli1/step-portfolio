@@ -7,3 +7,73 @@
 #greeting-container {
   margin-top: 20px;
 }
+
+#carousel-container {
+    max-width: 70%;
+}
+
+#background {
+    background-color: #AEECEF;
+}
+
+.fab {
+    color: black;
+}
+
+.next-section {
+    color: black;
+    text-align: right;
+}
+
+.next-section:hover {
+    color: #555;
+}
+
+.fa-github:hover {
+    color: #6e5494;
+}
+
+.fa-linkedin:hover {
+    color: #2867B2;
+}
+
+.title {
+    font-weight: bold;
+    font-size: 4em
+}
+
+.presentation {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.image-center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.typewriter h1 {
+  overflow: hidden; /* Ensures the content is not revealed until the animation */
+  border-right: .15em solid white; /* The typwriter cursor */
+  white-space: nowrap; /* Keeps the content on a single line */
+  margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+  letter-spacing: .15em; /* Adjust as needed */
+  animation: 
+    typing 2.5s steps(40, end),
+    blink-caret .50s step-end infinite;
+}
+
+/* The typing effect */
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: white; }
+}
