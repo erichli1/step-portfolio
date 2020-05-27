@@ -5,10 +5,11 @@
     <title>Who Am I?</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Questrial&display=swap">
     <script src="script.js"></script>
   </head>
-  <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">Eric Li</a>
+  <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark" id="navbar">
+    <a class="navbar-brand" href="#me">Eric Li</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -35,18 +36,18 @@
   <body id="background">
     <div id="content">
         <div class="presentation" id="me">
-            <h1>Eric Li</h1>
+            <h1 class="title">Eric Li</h1>
             <p>Hi! I'm an incoming sophomore at Harvard studying Computer Science and Economics. From Houston Texas, I'm passionate about economic development and technology, and in my free time, I enjoy playing basketball, dancing along to hip-hop music, and hanging out with friends.</p>
             <img src="/images/ericli.jpg" alt="Eric Headshot" width="250" class="image-center">
         </div>
 
         <div class="presentation" id="social">
-            <h1>Social media</h1>
+            <h1 class="title">Social media</h1>
             <p>Check me out on other platforms such as <a href="https://www.linkedin.com/in/erichli1/" target="_blank">LinkedIn</a> and <a href="https://github.com/erichli1" target="_blank">GitHub</a>.
         </div>
 
         <div class="presentation" id="projects">
-            <h1>Past projects</h1>
+            <h1 class="title">Past projects</h1>
             <p>In the past, I've worked on:</p>
             <ol>
                 <li><a href="https://echosearch.org/" target="_blank">ECHO Search</a>, an affordable housing search tool to increase access to desired neighborhoods for low-income individuals in the Boston area</li>
@@ -56,7 +57,7 @@
 
         <div class="presentation" id="photography">
             <div class="container">
-                <h1>Photography</h1>
+                <h1 class="title">Photography</h1>
                 <p>I also enjoy photography. Some favorite photos of mine include:</p>
                 <div class="container" id="carousel-container">
                     <div id="carouselCaptions" class="carousel slide" data-ride="carousel">
@@ -92,7 +93,7 @@
         </div>
 
         <div class="presentation" id="quotes">
-            <h1>My favorite quotes</h1>
+            <h1 class="title">My favorite quotes</h1>
             <p>Click here to get one of Eric's favorite quotes:</p>
             <button onclick="addRandomQuote()" class="btn btn-outline-primary">Get quote</button>
             <div id="quote-container"></div>
