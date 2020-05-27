@@ -21,11 +21,32 @@ html {
 }
 
 #carousel-container {
-    max-width: 50%;
+    max-width: 70%;
 }
 
 #background {
     background-color: #AEECEF;
+}
+
+.fab {
+    color: black;
+}
+
+.next-section {
+    color: black;
+    text-align: right;
+}
+
+.next-section:hover {
+    color: #555;
+}
+
+.fa-github:hover {
+    color: #6e5494;
+}
+
+.fa-linkedin:hover {
+    color: #2867B2;
 }
 
 .title {
@@ -35,7 +56,6 @@ html {
 
 .presentation {
     height: 100vh;
-    text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -46,3 +66,4 @@ html {
     margin-left: auto;
     margin-right: auto;
 }
+
