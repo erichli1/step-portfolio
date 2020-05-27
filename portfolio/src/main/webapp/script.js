@@ -13,14 +13,24 @@
 // limitations under the License.
 
 /**
- * Adds a random greeting to the page.
+ * Adds a random quote to the page.
  */
+var lastNum = 0;
+
 function addRandomQuote() {
   const quotes =
-      ['[Human\'s] great skill is their capacity to escalate. (The Book Thief)', 'As flies to wanton boys, are we to the gods, they kill us for sport. (Gloucester in King Lear)', 'When we are headed the wrong way, the last thing we need is progress. (Nick Bostrom)', 'Things don\'t have to be perfect to be wonderful. (NYTimes The Best Advice You\'ve Ever Received)'];
+      ['The best time to plant a tree is 20 years ago, the second best time is today.', 'Human\'s great skill is their capacity to escalate.', 'As flies to wanton boys, are we to the gods, they kill us for sport.', 'When we are headed the wrong way, the last thing we need is progress.', 'Things don\'t have to be perfect to be wonderful.'];
 
-  // Pick a random greeting.
+  // Pick a random quote.
+  num = Math.floor(Math.random() * quotes.length);
+
+  // check if the last quote is this one
+  while(num == lastNum) {
+      num = Math.floor(Math.random() * quotes.length);
+  }
   const quote = quotes[Math.floor(Math.random() * quotes.length)];
+
+  lastNum = num;
 
   // Add it to the page.
   const quoteContainer = document.getElementById('quote-container');
