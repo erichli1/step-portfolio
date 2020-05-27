@@ -35,6 +35,7 @@ html {
 .next-section {
     color: black;
     text-align: right;
+    
 }
 
 .next-section:hover {
@@ -75,7 +76,7 @@ html {
   letter-spacing: .15em; /* Adjust as needed */
   animation: 
     typing 2.5s steps(40, end),
-    blink-caret .50s step-end infinite;
+    blink-caret 1s step-end infinite;
 }
 
 /* The typing effect */
