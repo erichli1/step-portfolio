@@ -1,3 +1,7 @@
+:root {
+  --mainColor: black;
+}
+
 html {
     scroll-behavior: smooth;
 }
@@ -7,7 +11,7 @@ html {
     margin-right: auto;
     margin-top: 5vh;
     margin-bottom: 5vh;
-    width: 650px;
+    width: 60vw;
     font-size: 20px;
     font-family: 'Questrial', sans-serif;
 }
@@ -22,6 +26,7 @@ html {
 
 #carousel-container {
     max-width: 70%;
+    max-height: 60vh;
 }
 
 #background {
@@ -61,14 +66,44 @@ html {
     justify-content: center;
 }
 
+.profile-photo {
+    float: left;
+    margin-right: 50px;
+}
+
 .image-center {
     display: block;
     margin-left: auto;
     margin-right: auto;
 }
 
+a.highlight {
+  background:
+     linear-gradient(
+       to bottom, var(--mainColor) 0%,
+       var(--mainColor) 100%
+     );
+    background-position: 0 100%;
+    background-repeat: repeat-x;
+    background-size: 4px 4px;
+  color: #000;
+  text-decoration: none;
+  transition: background-size .2s;
+}
+
+a.highlight:hover {
+  background-size: 4px 100px;
+  color: #AEECEF;
+  text-decoration: none;
+}
+
+p {
+    font-size: 30px;
+}
+
 img {
     max-width: 100%;
+    max-height: 100%;
 }
 
 blockquote {
@@ -88,6 +123,10 @@ blockquote:before {
 }
 blockquote p {
   display: inline;
+}
+
+.typewriter-container {
+    display: flex;
 }
 
 .typewriter h1 {
