@@ -13,14 +13,24 @@
 // limitations under the License.
 
 /**
- * Adds a random greeting to the page.
+ * Adds a random quote to the page.
  */
-function addRandomGreeting() {
-  const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
+var lastNum = 0;
 
-  // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
+function addRandomQuote() {
+  const quotes =
+      ['The best time to plant a tree is 20 years ago, the second best time is today.', 'Human\'s great skill is their capacity to escalate.', 'As flies to wanton boys, are we to the gods, they kill us for sport.', 'When we are headed the wrong way, the last thing we need is progress.', 'Things don\'t have to be perfect to be wonderful.'];
+
+  // Pick a random quote.
+  num = Math.floor(Math.random() * quotes.length);
+
+  // check if the last quote is this one
+  while(num == lastNum) {
+      num = Math.floor(Math.random() * quotes.length);
+  }
+  const quote = quotes[Math.floor(Math.random() * quotes.length)];
+
+  lastNum = num;
 
   // Add it to the page.
   const greetingContainer = document.getElementById('greeting-container');
