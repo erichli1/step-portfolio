@@ -74,8 +74,6 @@
         <div class="presentation" id="projects">
             <h1 class="title">Project highlight</h1>
             <p>I was a software engineering intern at Boston Housing Authority and helped create <a href="https://echosearch.org/" target="_blank" class="highlight">ECHO Search</a>, an affordable housing search tool to increase access to desired neighborhoods for low-income individuals in the Boston area.</p>
-            <img src="/images/echo.PNG" alt="Picture of ECHO" class="image-center">
-
             <br/>
             <a href="#photography" class="next-section"><i class="fas fa-arrow-circle-down fa-2x"></i></a>
         </div>
@@ -117,5 +115,30 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+    <script>
+        const backgroundElem = document.querySelector('#background');
+        const projectElem = document.querySelector('#projects');
+        const photographyElem = document.querySelector('#photography');
+
+        const scrollAmount = 0;
+        window.addEventListener('scroll', (event) => {
+            const projectTop = projectElem.getBoundingClientRect().top;
+            const projectBottom = projectElem.getBoundingClientRect().bottom;
+            const projectMiddle = ((projectBottom - projectTop) / 2) + projectTop;
+            if (projectMiddle - window.innerHeight < scrollAmount) {
+                backgroundElem.style.backgroundImage = 'url(/images/echosearch.png)';
+            } else {
+                backgroundElem.style.backgroundImage = 'url()';
+            }
+
+            const photographyTop = photographyElem.getBoundingClientRect().top;
+            const photographyBottom = photographyElem.getBoundingClientRect().bottom;
+            const photographyMiddle = ((photographyBottom - photographyTop) / 2) + photographyTop;
+            if (photographyMiddle - window.innerHeight < scrollAmount) {
+                backgroundElem.style.backgroundImage = 'url()';
+            }
+        })
+    </script>
   </body>
 </html>
