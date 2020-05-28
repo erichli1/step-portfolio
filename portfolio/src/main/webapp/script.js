@@ -33,6 +33,6 @@ function addRandomQuote() {
   lastNum = num;
 
   // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
-  greetingContainer.innerText = greeting;
+  const quoteContainer = document.getElementById('quote-container');
+  quoteContainer.innerText = quote;
 }
