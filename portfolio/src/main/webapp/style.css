@@ -1,3 +1,7 @@
+:root {
+  --mainColor: black;
+}
+
 html {
     scroll-behavior: smooth;
 }
@@ -7,8 +11,8 @@ html {
     margin-right: auto;
     margin-top: 5vh;
     margin-bottom: 5vh;
-    width: 650px;
-    font-size: 20px;
+    width: 60vw;
+    font-color: black;
     font-family: 'Questrial', sans-serif;
 }
 
@@ -22,10 +26,19 @@ html {
 
 #carousel-container {
     max-width: 70%;
+    max-height: 60vh;
 }
 
 #background {
-    background-color: #AEECEF;
+    background-color: #fffef2;
+}
+
+.card-text {
+    font-size: 1.5em;
+}
+
+.card-title {
+    font-weight: bold;
 }
 
 .fab {
@@ -51,7 +64,7 @@ html {
 
 .title {
     font-weight: bold;
-    font-size: 4em
+    font-size: 4em;
 }
 
 .presentation {
@@ -61,10 +74,49 @@ html {
     justify-content: center;
 }
 
+.profile-photo {
+    float: left;
+    margin-right: 50px;
+}
+
 .image-center {
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+.pic-caption {
+    color: white;
+    font-weight: bold;
+}
+
+a.highlight {
+  background:
+     linear-gradient(
+       to bottom, var(--mainColor) 0%,
+       var(--mainColor) 100%
+     );
+    background-position: 0 100%;
+    background-repeat: repeat-x;
+    background-size: 4px 4px;
+  color: #000;
+  text-decoration: none;
+  transition: background-size .2s;
+}
+
+a.highlight:hover {
+  background-size: 4px 100px;
+  color: #fffef2;
+  text-decoration: none;
+}
+
+p {
+    font-size: 2em;
+}
+
+img {
+    max-width: 100%;
+    max-height: 100%;
 }
 
 blockquote {
@@ -86,9 +138,13 @@ blockquote p {
   display: inline;
 }
 
+.typewriter-container {
+    display: flex;
+}
+
 .typewriter h1 {
   overflow: hidden; /* Ensures the content is not revealed until the animation */
-  border-right: .15em solid white; /* The typwriter cursor */
+  border-right: .15em solid black; /* The typwriter cursor */
   white-space: nowrap; /* Keeps the content on a single line */
   margin: 0 auto; /* Gives that scrolling effect as the typing happens */
   letter-spacing: .15em; /* Adjust as needed */
@@ -106,5 +162,31 @@ blockquote p {
 /* The typewriter cursor effect */
 @keyframes blink-caret {
   from, to { border-color: transparent }
-  50% { border-color: white; }
+  50% { border-color: black; }
 }
+
+#more-arrows {
+	 width: 75px;
+	 height: 65px;
+}
+ #more-arrows:hover polygon {
+	fill: black;
+	transition: all 0.2s ease-out;
+}
+ #more-arrows:hover polygon.arrow-bottom {
+	transform: translateY(-18px);
+}
+ #more-arrows:hover polygon.arrow-top {
+	transform: translateY(18px);
+}
+ polygon {
+	fill: black;
+	transition: all 0.2s ease-out;
+}
+ polygon.arrow-middle {
+	 opacity: 0.75;
+}
+ polygon.arrow-top {
+	 opacity: 0.5;
+}
+ 
