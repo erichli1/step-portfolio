@@ -92,7 +92,55 @@
                             </div>
                             <div class="card-footer">
                                 <a class="btn btn-info" href="https://www.wecareact.org/" target="_blank"><text class="card-text">Website</text></a>
-                                <a class="btn btn-info" onclick="seeLess('wca')"><text class="card-text">See less</text></a>
+                                <a href="#wcaLess" class="btn btn-info" onclick="seeLess('wca')"><text class="card-text">See less</text></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12" id="echoMore" style="display: none;">
+                        <div class="card text-white bg-dark work-card">
+                            <div class="card-body">
+                                <h2 class="card-title">Technology</h2>
+                                <img src="/images/echo-vid.gif">
+                                <br />
+                                <p class="card-text">
+                                    The research organization Opportunity Insights has shown that the neighborhood that somebody grows up in has vast implications for the socioeconomic status of that person. With this in mind, I helped develop ECHO, an affordable housing search website that focuses on neighborhoods first, and then listings. By using the user's preferences, ECHO generates neighborhood recommendations and then displays transit and listing options given the user's budget. Such software will lower the barriers of information regarding neighborhood quality to ensure that low-income residents in the Boston area have access to high socioeconomic mobility neighborhoods.
+                                </p>
+                            </div>
+                            <div class="card-footer">
+                                <a class="btn btn-info" href="https://echosearch.org/" target="_blank"><text class="card-text">Website</text></a>
+                                <a href="#echoLess" class="btn btn-info" onclick="seeLess('echo')"><text class="card-text">See less</text></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12" id="grcMore" style="display: none;">
+                        <div class="card text-white bg-dark work-card">
+                            <div class="card-body">
+                                <h2 class="card-title">Consulting</h2>
+                                <img src="/images/grc-vid.gif">
+                                <br />
+                                <p class="card-text">
+                                    Global Research and Consulting is a student-run nonprofit consulting group dedicated to making high-impact positive social change. The organization has four main branches: the Specialist High Impact Program (develop an M&E system for nonprofits), Consulting (increase the efficacy of nonprofits), Tech and Analytics (provide tech solutions to amplify impact of nonprofits), and Insights Research (publish think tank articles to make progress on global issues). With over 100 members across 6 branches, GRC has worked with the World Bank and the World Wildlife Fund among others to create change. As CTO of the organization, I create and execute the technology strategy for GRC's operations and integrate technology into the fabric of our work to help us better help others.
+                                </p>
+                            </div>
+                            <div class="card-footer">
+                                <a class="btn btn-info" href="https://www.grcglobalgroup.com/" target="_blank"><text class="card-text">Website</text></a>
+                                <a href="#grcLess" class="btn btn-info" onclick="seeLess('grc')"><text class="card-text">See less</text></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12" id="khazeiMore" style="display: none;">
+                        <div class="card text-white bg-dark work-card">
+                            <div class="card-body">
+                                <h2 class="card-title">Politics</h2>
+                                <img src="/images/khazei-vid.gif">
+                                <br />
+                                <p class="card-text">
+                                    After meeting Alan Khazei and learning about his incredible work founding City Year and helping found Americorps, I knew that I wanted to get him to office. On the campaign, I'm part of the Community Outreach team where I ensure our work functions smoothly with the rest of MA-4. For example, I co-designed the Khazei Summer Fellowship for 100 college students, especially integrating community building and collaboration as a critical part of the program.
+                                </p>
+                            </div>
+                            <div class="card-footer">
+                                <a class="btn btn-info" href="https://alankhazei.com/" target="_blank"><text class="card-text">Website</text></a>
+                                <a href="#khazeiLess" class="btn btn-info" onclick="seeLess('khazei')"><text class="card-text">See less</text></a>
                             </div>
                         </div>
                     </div>
@@ -104,23 +152,11 @@
                                 <p class="card-text">I co-founded the 501c3 non-profit We Care Act, dedicated to engaging youth in community service and increasing social mobility. We've engaged over 36,000 people across the world in service and have raised more than $400,000 in funds and in-kind donations.</p>
                             </div>
                             <div class="card-footer">
-                                <a class="btn btn-info" onclick="seeMore('wca')"><text class="card-text">See more</text></a>
+                                <a href="#wcaMore" class="btn btn-info" onclick="seeMore('wca')"><text class="card-text">See more</text></a>
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-md-6 col-xl-4">
-                        <div class="card text-white bg-dark work-card" height="98%">
-                            <img src="/images/grc_logo.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h2 class="card-title">Consulting</h2>
-                                <p class="card-text">I'm the CTO of the nonprofit consulting group Global Research and Consulting which works to increase the efficacy of nonprofits through conducting research projects, identifying key bottlenecks, and developing monitoring and evaluation systems.</p>
-                            </div>
-                            <div class="card-footer">
-                                <a href="https://www.grcglobalgroup.com/" target="_blank" class="btn btn-info"><text class="card-text">grcglobalgroup.com</text></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-xl-4">
+                    <div class="col-12 col-md-6 col-xl-4" id="echoLess">
                         <div class="card text-white bg-dark work-card" height="98%">
                             <img src="/images/echo_logo.png" class="card-img-top" alt="...">
                             <div class="card-body">
@@ -128,11 +164,23 @@
                                 <p class="card-text">I was a software engineering intern for the Boston Housing Authority to help develop ECHO, an affordable housing search website to increase access to areas with high socioeconomic mobility for low-income residents.</p>
                             </div>
                             <div class="card-footer">
-                                <a href="https://echosearch.org/" target="_blank" class="btn btn-info"><text class="card-text">echosearch.org</text></a>
+                                <a href="#echoMore" class="btn btn-info" onclick="seeMore('echo')"><text class="card-text">See more</text></a>
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-md-6 col-xl-4">
+                    <div class="col-12 col-md-6 col-xl-4" id="grcLess">
+                        <div class="card text-white bg-dark work-card" height="98%">
+                            <img src="/images/grc_logo.png" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h2 class="card-title">Consulting</h2>
+                                <p class="card-text">I'm the CTO of the nonprofit consulting group Global Research and Consulting which works to increase the efficacy of nonprofits through conducting research projects, identifying key bottlenecks, and developing monitoring and evaluation systems.</p>
+                            </div>
+                            <div class="card-footer">
+                                <a href="#grcMore" class="btn btn-info" onclick="seeMore('grc')"><text class="card-text">See more</text></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-xl-4" id="khazeiLess">
                         <div class="card text-white bg-dark work-card" height="98%">
                             <img src="/images/khazei_logo.png" class="card-img-top" alt="...">
                             <div class="card-body">
@@ -140,7 +188,7 @@
                                 <p class="card-text">As part of Community Outreach for Khazei for Congress, I co-designed a political fellowship for about 100 students to get an understanding of the inner operations of campaigns and how to build grassroots movements.</p>
                             </div>
                             <div class="card-footer">
-                                <a href="http://alankhazei.com/" target="_blank" class="btn btn-info"><text class="card-text">alankhazei.com</text></a>
+                                <a href="#khazeiMore" class="btn btn-info" onclick="seeMore('khazei')"><text class="card-text">See more</text></a>
                             </div>
                         </div>
                     </div>
