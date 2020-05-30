@@ -77,8 +77,26 @@
         <div class="presentation" id="work">
             <h1 class="title">My work</h1>
             <div class="container-fluid">
-                <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
-                    <div class="col">
+                <div class="row">
+                    <div class="col-12" id="wcaMore" style="display: none;">
+                        <div class="card text-white bg-dark work-card">
+                            <div class="card-body">
+                                <h2 class="card-title">Service</h2>
+                                <div class="videoWrapper">
+                                    <iframe src="https://www.youtube.com/embed/LA-W3u8dtEQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                </div>
+                                <br />
+                                <p class="card-text">
+                                    After the devastating 2008 earthquake in Sichuan, China, my sisters and I knew we had to do something, do anything. We went door-to-door in our neighborhood the next day and raised more than $80, an unthinkable amount of money for my 7 year old self. More than a decade later, our initial efforts to fundraise have evolved into the 501c3 non-profit We Care Act, deidcated to engaging youth in community service. Currently, our primary project is a digital literacy initiative (video above) which aims to refurbish and recycle electronics for the dual purpose of increasing social mobility and protecting the environment.
+                                </p>
+                            </div>
+                            <div class="card-footer">
+                                <a class="btn btn-info" href="https://www.wecareact.org/" target="_blank"><text class="card-text">Website</text></a>
+                                <a class="btn btn-info" onclick="seeLess('wca')"><text class="card-text">See less</text></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-xl-4" id="wcaLess">
                         <div class="card text-white bg-dark work-card">
                             <img src="/images/wca_logo.png" class="card-img-top" alt="...">
                             <div class="card-body">
@@ -86,11 +104,11 @@
                                 <p class="card-text">I co-founded the 501c3 non-profit We Care Act, dedicated to engaging youth in community service and increasing social mobility. We've engaged over 36,000 people across the world in service and have raised more than $400,000 in funds and in-kind donations.</p>
                             </div>
                             <div class="card-footer">
-                                <a href="https://www.wecareact.org/" target="_blank" class="btn btn-info"><text class="card-text">wecareact.org</text></a>
+                                <a class="btn btn-info" onclick="seeMore('wca')"><text class="card-text">See more</text></a>
                             </div>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col-12 col-md-6 col-xl-4">
                         <div class="card text-white bg-dark work-card" height="98%">
                             <img src="/images/grc_logo.png" class="card-img-top" alt="...">
                             <div class="card-body">
@@ -102,7 +120,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col-12 col-md-6 col-xl-4">
                         <div class="card text-white bg-dark work-card" height="98%">
                             <img src="/images/echo_logo.png" class="card-img-top" alt="...">
                             <div class="card-body">
@@ -114,7 +132,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col-12 col-md-6 col-xl-4">
                         <div class="card text-white bg-dark work-card" height="98%">
                             <img src="/images/khazei_logo.png" class="card-img-top" alt="...">
                             <div class="card-body">

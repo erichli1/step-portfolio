@@ -36,3 +36,22 @@ function addRandomQuote() {
   const quoteContainer = document.getElementById('quote-container');
   quoteContainer.innerText = quote;
 }
+
+function seeMore(id) {
+
+    const moreId = id + 'More';
+    const lessId = id + 'Less';
+
+    document.getElementById(lessId).style.display = "none";
+    document.getElementById(moreId).style.display = "block";
+
+}
+
+function seeLess(id) {
+
+    const moreId = id + 'More';
+    const lessId = id + 'Less';
+
+    document.getElementById(lessId).style.display = "block";
+    document.getElementById(moreId).style.display = "none";
+}
