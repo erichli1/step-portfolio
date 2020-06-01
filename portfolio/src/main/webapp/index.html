@@ -2,10 +2,11 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Who Am I?</title>
+    <title>Eric Li</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Questrial&display=swap">
+    <link rel='icon' href='images/favicon.ico' type='image/x-icon'/ >
     <script src="https://kit.fontawesome.com/d738dc5d1f.js" crossorigin="anonymous"></script>
     <script src="script.js"></script>
   </head>
@@ -53,6 +54,7 @@
                 </a>
             </div>
         </div>
+
         <div class="presentation" id="me">
             <div>
                 <img src="/images/ericli.jpg" alt="Eric Headshot" width="350" class="profile-photo">
@@ -70,28 +72,125 @@
             </div>
         </div>
 
+        <div style="min-height: 50vh"></div>
+
         <div class="presentation" id="work">
             <h1 class="title">My work</h1>
-            <div class="card-deck">
-                <div class="card text-white bg-dark">
-                    <img src="/images/wca_logo.png" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h2 class="card-title">Service</h2>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12" id="wcaMore" style="display: none;">
+                        <div class="card text-white bg-dark work-card">
+                            <div class="card-body">
+                                <h2 class="card-title">Service</h2>
+                                <div class="videoWrapper">
+                                    <iframe src="https://www.youtube.com/embed/LA-W3u8dtEQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                </div>
+                                <br />
+                                <p class="card-text">
+                                    After the devastating 2008 earthquake in Sichuan, China, my sisters and I knew we had to do something, do anything. We went door-to-door in our neighborhood the next day and raised more than $80, an unthinkable amount of money for my 7 year old self. More than a decade later, our initial efforts to fundraise have evolved into the 501c3 non-profit We Care Act, deidcated to engaging youth in community service. Currently, our primary project is a digital literacy initiative (video above) which aims to refurbish and recycle electronics for the dual purpose of increasing social mobility and protecting the environment.
+                                </p>
+                            </div>
+                            <div class="card-footer">
+                                <a class="btn btn-info" href="https://www.wecareact.org/" target="_blank"><text class="card-text">Website</text></a>
+                                <a href="#wcaLess" class="btn btn-info" onclick="seeLess('wca')"><text class="card-text">See less</text></a>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="card text-white bg-dark">
-                    <img src="/images/grc_logo.png" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h2 class="card-title">Consulting</h2>
-                        <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+                    <div class="col-12" id="echoMore" style="display: none;">
+                        <div class="card text-white bg-dark work-card">
+                            <div class="card-body">
+                                <h2 class="card-title">Technology</h2>
+                                <img src="/images/echo-vid.gif">
+                                <br />
+                                <p class="card-text">
+                                    The research organization Opportunity Insights has shown that the neighborhood that somebody grows up in has vast implications for the socioeconomic status of that person. With this in mind, I helped develop ECHO, an affordable housing search website that focuses on neighborhoods first, and then listings. By using the user's preferences, ECHO generates neighborhood recommendations and then displays transit and listing options given the user's budget. Such software will lower the barriers of information regarding neighborhood quality to ensure that low-income residents in the Boston area have access to high socioeconomic mobility neighborhoods.
+                                </p>
+                            </div>
+                            <div class="card-footer">
+                                <a class="btn btn-info" href="https://echosearch.org/" target="_blank"><text class="card-text">Website</text></a>
+                                <a href="#echoLess" class="btn btn-info" onclick="seeLess('echo')"><text class="card-text">See less</text></a>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="card text-white bg-dark">
-                    <img src="/images/echo_logo.png" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h2 class="card-title">Technology</h2>
-                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+                    <div class="col-12" id="grcMore" style="display: none;">
+                        <div class="card text-white bg-dark work-card">
+                            <div class="card-body">
+                                <h2 class="card-title">Consulting</h2>
+                                <img src="/images/grc-vid.gif">
+                                <br />
+                                <p class="card-text">
+                                    Global Research and Consulting is a student-run nonprofit consulting group dedicated to making high-impact positive social change. The organization has four main branches: the Specialist High Impact Program (develop an M&E system for nonprofits), Consulting (increase the efficacy of nonprofits), Tech and Analytics (provide tech solutions to amplify impact of nonprofits), and Insights Research (publish think tank articles to make progress on global issues). With over 100 members across 6 branches, GRC has worked with the World Bank and the World Wildlife Fund among others to create change. As CTO of the organization, I create and execute the technology strategy for GRC's operations and integrate technology into the fabric of our work to help us better help others.
+                                </p>
+                            </div>
+                            <div class="card-footer">
+                                <a class="btn btn-info" href="https://www.grcglobalgroup.com/" target="_blank"><text class="card-text">Website</text></a>
+                                <a href="#grcLess" class="btn btn-info" onclick="seeLess('grc')"><text class="card-text">See less</text></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12" id="khazeiMore" style="display: none;">
+                        <div class="card text-white bg-dark work-card">
+                            <div class="card-body">
+                                <h2 class="card-title">Politics</h2>
+                                <img src="/images/khazei-vid.gif">
+                                <br />
+                                <p class="card-text">
+                                    After meeting Alan Khazei and learning about his incredible work founding City Year and helping found Americorps, I knew that I wanted to get him to office. On the campaign, I'm part of the Community Outreach team where I ensure our work functions smoothly with the rest of MA-4. For example, I co-designed the Khazei Summer Fellowship for 100 college students, especially integrating community building and collaboration as a critical part of the program.
+                                </p>
+                            </div>
+                            <div class="card-footer">
+                                <a class="btn btn-info" href="https://alankhazei.com/" target="_blank"><text class="card-text">Website</text></a>
+                                <a href="#khazeiLess" class="btn btn-info" onclick="seeLess('khazei')"><text class="card-text">See less</text></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-xl-4" id="wcaLess">
+                        <div class="card text-white bg-dark work-card">
+                            <img src="/images/wca_logo.png" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h2 class="card-title">Service</h2>
+                                <p class="card-text">I co-founded the 501c3 non-profit We Care Act, dedicated to engaging youth in community service and increasing social mobility. We've engaged over 36,000 people across the world in service and have raised more than $400,000 in funds and in-kind donations.</p>
+                            </div>
+                            <div class="card-footer">
+                                <a href="#wcaMore" class="btn btn-info" onclick="seeMore('wca')"><text class="card-text">See more</text></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-xl-4" id="echoLess">
+                        <div class="card text-white bg-dark work-card" height="98%">
+                            <img src="/images/echo_logo.png" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h2 class="card-title">Technology</h2>
+                                <p class="card-text">I was a software engineering intern for the Boston Housing Authority to help develop ECHO, an affordable housing search website to increase access to areas with high socioeconomic mobility for low-income residents.</p>
+                            </div>
+                            <div class="card-footer">
+                                <a href="#echoMore" class="btn btn-info" onclick="seeMore('echo')"><text class="card-text">See more</text></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-xl-4" id="grcLess">
+                        <div class="card text-white bg-dark work-card" height="98%">
+                            <img src="/images/grc_logo.png" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h2 class="card-title">Consulting</h2>
+                                <p class="card-text">I'm the CTO of the nonprofit consulting group Global Research and Consulting which works to increase the efficacy of nonprofits through conducting research projects, identifying key bottlenecks, and developing monitoring and evaluation systems.</p>
+                            </div>
+                            <div class="card-footer">
+                                <a href="#grcMore" class="btn btn-info" onclick="seeMore('grc')"><text class="card-text">See more</text></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-xl-4" id="khazeiLess">
+                        <div class="card text-white bg-dark work-card" height="98%">
+                            <img src="/images/khazei_logo.png" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h2 class="card-title">Politics</h2>
+                                <p class="card-text">As part of Community Outreach for Khazei for Congress, I co-designed a political fellowship for about 100 students to get an understanding of the inner operations of campaigns and how to build grassroots movements.</p>
+                            </div>
+                            <div class="card-footer">
+                                <a href="#khazeiMore" class="btn btn-info" onclick="seeMore('khazei')"><text class="card-text">See more</text></a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -106,6 +205,8 @@
                 </a>
             </div>
         </div>
+        
+        <div style="min-height: 50vh"></div>
 
         <div class="presentation" id="photography">
             <div class="container-fluid">
@@ -130,6 +231,7 @@
                     </div>
                 </div>
             </div>
+            <br/>
             <div class="next-section">
                 <a href="#quotes">
                     <svg id="more-arrows">
@@ -141,12 +243,15 @@
             </div>
         </div>
 
+        <div style="min-height: 50vh"></div>
+
         <div class="presentation" id="quotes">
             <h1 class="title">My favorite quotes</h1>
             <p>Click here to get one of Eric's favorite quotes:</p>
             <button onclick="addRandomQuote()" class="btn btn-outline-dark">Get quote</button>
             <br/>
             <blockquote id="quote-container">The best time to plant a tree is 20 years ago, the second best time is today.</blockquote>
+            <br/>
             <div class="next-section">
                 <a href="#contact">
                     <svg id="more-arrows">
@@ -158,7 +263,9 @@
             </div>
         </div>
 
-        <div class="presentation" id="contact">
+        <div style="min-height: 50vh"></div>
+
+        <div id="contact">
             <h1 class="title">Contact me</h1>
             <p>Check me out on other platforms such as <a href="https://www.linkedin.com/in/erichli1/" target="_blank" class="highlight">LinkedIn</a> and <a href="https://github.com/erichli1" target="_blank" class="highlight">GitHub</a>.
             <br/>
