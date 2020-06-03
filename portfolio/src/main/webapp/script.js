@@ -41,9 +41,12 @@ function seeMore(id) {
 
     const moreId = id + 'More';
     const lessId = id + 'Less';
+    const gifId = id + '-vid';
+    const gifLoc = '/images/' + id +'-vid.gif';
 
     document.getElementById(lessId).style.display = 'none';
     document.getElementById(moreId).style.display = 'block';
+    document.getElementById(gifId).src = gifLoc;
 
 }
 
