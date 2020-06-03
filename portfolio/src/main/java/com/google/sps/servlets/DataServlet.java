@@ -27,6 +27,7 @@ import java.util.ArrayList;
 public class DataServlet extends HttpServlet {
 
   private ArrayList<String> messages;
+  private String commentInput = "comment-input";
 
   @Override
   public void init() {
@@ -44,7 +45,7 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    messages.add(request.getParameter("comment-input"));
+    messages.add(request.getParameter(commentInput));
 
     response.sendRedirect("/#comments");
   }
