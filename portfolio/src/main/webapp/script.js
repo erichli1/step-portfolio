@@ -58,9 +58,8 @@ function seeLess(id) {
 
 function getComments() {
     fetch('/data').then(response => response.json()).then((messages) => {
-        console.log(messages);
         const commentsList = document.getElementById('comments-container');
-        // commentsList.innerHTML = '';
+        
         for(message of messages) {
             commentsList.appendChild(createListElement(message));
         }
