@@ -11,7 +11,7 @@ html {
     margin-right: auto;
     margin-top: 5vh;
     margin-bottom: 5vh;
-    width: 60vw;
+    width: 800px;
     font-color: black;
     font-family: 'Questrial', sans-serif;
 }
@@ -27,6 +27,10 @@ html {
 #carousel-container {
     max-width: 70%;
     max-height: 60vh;
+}
+
+#comments-container {
+    font-size: 1.5em;
 }
 
 #background {
