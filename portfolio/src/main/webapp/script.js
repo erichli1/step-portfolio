@@ -60,12 +60,26 @@ function seeLess(id) {
 }
 
 function getComments() {
-    fetch('/data').then(response => response.json()).then((messages) => {
+
+    var numberComments = document.getElementById("number-comments").value;
+    var fetchURL = '/data?number-comments=' + numberComments;
+
+    fetch(fetchURL).then(response => response.json()).then((messages) => {
         const commentsList = document.getElementById('comments-container');
+
+        commentsList.innerHTML = '';
         
         for(message of messages) {
             commentsList.appendChild(createListElement(message));
         }
+    });
+}
+
+function deleteComments() {
+    const request = new Request('/delete-data', {method: 'POST'});
+
+    fetch(request).then(response => {
+        getComments();
     });
 }
 
