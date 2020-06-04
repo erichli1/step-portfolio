@@ -34,7 +34,7 @@ public class DataServlet extends HttpServlet {
 
   private static final String REQUEST_PARAMETER_COMMENT_INPUT = "comment-input";
   private static final String REQUEST_PARAMETER_NUMBER_COMMENTS = "number-comments";
-  private static final String REDIRECT_COMMENTS = "/#comments";
+  private static final String REDIRECT_COMMENTS = "/comments.html";
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
