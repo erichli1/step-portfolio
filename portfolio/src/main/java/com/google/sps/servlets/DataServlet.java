@@ -14,19 +14,40 @@
 
 package com.google.sps.servlets;
 
+import com.google.gson.Gson;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
+  private ArrayList<String> messages;
+  private static final String REQUEST_PARAMETER_COMMENT_INPUT = "comment-input";
+  private static final String REDIRECT_COMMENTS = "/#comments";
+
+  @Override
+  public void init() {
+    messages = new ArrayList<>();
+  }
+
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.setContentType("text/html;");
-    response.getWriter().println("<h1>Hello world!</h1>");
+    Gson gson = new Gson();
+    String json = gson.toJson(messages);
+    
+    response.setContentType("application/json");
+    response.getWriter().println(json);
+  }
+
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    messages.add(request.getParameter(REQUEST_PARAMETER_COMMENT_INPUT));
+
+    response.sendRedirect(REDIRECT_COMMENTS);
   }
 }

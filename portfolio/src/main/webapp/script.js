@@ -42,8 +42,8 @@ function seeMore(id) {
     const moreId = id + 'More';
     const lessId = id + 'Less';
 
-    document.getElementById(lessId).style.display = "none";
-    document.getElementById(moreId).style.display = "block";
+    document.getElementById(lessId).style.display = 'none';
+    document.getElementById(moreId).style.display = 'block';
 
 }
 
@@ -52,6 +52,22 @@ function seeLess(id) {
     const moreId = id + 'More';
     const lessId = id + 'Less';
 
-    document.getElementById(lessId).style.display = "block";
-    document.getElementById(moreId).style.display = "none";
+    document.getElementById(lessId).style.display = 'block';
+    document.getElementById(moreId).style.display = 'none';
+}
+
+function getComments() {
+    fetch('/data').then(response => response.json()).then((messages) => {
+        const commentsList = document.getElementById('comments-container');
+        
+        for(message of messages) {
+            commentsList.appendChild(createListElement(message));
+        }
+    });
+}
+
+function createListElement(comment) {
+    const listElement = document.createElement('li');
+    listElement.innerText = comment;
+    return listElement;
 }
