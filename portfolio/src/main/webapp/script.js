@@ -70,7 +70,7 @@ function getComments() {
         commentsList.innerHTML = '';
         
         for(message of messages) {
-            commentsList.appendChild(createListElement(message));
+            commentsList.appendChild(createCommentCard(message));
         }
     });
 }
@@ -83,8 +83,16 @@ function deleteComments() {
     });
 }
 
-function createListElement(comment) {
+function createListElement(message) {
     const listElement = document.createElement('li');
-    listElement.innerText = comment;
+    listElement.innerText = message;
     return listElement;
+}
+
+function createCommentCard(message) {
+    var commentCard = document.getElementById("cardCommentTemplate").cloneNode(true);
+    commentCard.style.display = "block";
+    commentCard.getElementsByTagName("p")[0].innerHTML = message;
+    console.log(commentCard);
+    return commentCard;
 }
