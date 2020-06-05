@@ -36,6 +36,7 @@ public class DataServlet extends HttpServlet {
   private static final String REQUEST_PARAMETER_COMMENT_INPUT = "comment-input";
   private static final String REQUEST_PARAMETER_PICTURE_LINK = "picture-link";
   private static final String REQUEST_PARAMETER_NUMBER_COMMENTS = "number-comments";
+  private static final String REQUEST_PARAMETER_NAME = "name";
   private static final String REDIRECT_COMMENTS = "/comments.html";
 
   @Override
@@ -54,11 +55,13 @@ public class DataServlet extends HttpServlet {
     Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
     PreparedQuery results = datastore.prepare(query);
     for (Entity entity : results.asIterable()) {
+        
+        String name = (String) entity.getProperty("name");
         String message = (String) entity.getProperty("message");
         String pictureLink = (String) entity.getProperty("picture");
         long timestamp = (long) entity.getProperty("timestamp");
 
-        Comment comment = new Comment(message, pictureLink, timestamp);
+        Comment comment = new Comment(name, message, pictureLink, timestamp);
         
         comments.add(comment);
 
@@ -79,12 +82,14 @@ public class DataServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String message = request.getParameter(REQUEST_PARAMETER_COMMENT_INPUT);
     String pictureLinkRaw = request.getParameter(REQUEST_PARAMETER_PICTURE_LINK);
+    String name = request.getParameter(REQUEST_PARAMETER_NAME);
 
     String pictureLink = getPictureLink(pictureLinkRaw);
 
     long timestamp = System.currentTimeMillis();
 
     Entity commentEntity = new Entity("Comment");
+    commentEntity.setProperty("name", name);
     commentEntity.setProperty("message", message);
     commentEntity.setProperty("timestamp", timestamp);
     commentEntity.setProperty("picture", pictureLink);

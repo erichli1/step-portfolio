@@ -70,7 +70,7 @@ function getComments() {
         commentsList.innerHTML = '';
         
         for(comment of comments) {
-            commentsList.appendChild(createCommentCard(comment.message, comment.pictureLink));
+            commentsList.appendChild(createCommentCard(comment.name, comment.message, comment.pictureLink));
         }
     });
 }
@@ -89,11 +89,13 @@ function createListElement(message) {
     return listElement;
 }
 
-function createCommentCard(message, pictureLink) {
+function createCommentCard(name, message, pictureLink) {
     var commentCard = document.getElementById("cardCommentTemplate").cloneNode(true);
     commentCard.style.display = "block";
+
     commentCard.getElementsByTagName("img")[0].src = pictureLink;
-    commentCard.getElementsByTagName("p")[0].innerHTML = message;
-    console.log(commentCard);
+    commentCard.getElementsByTagName("p")[0].innerHTML = name;
+    commentCard.getElementsByTagName("p")[1].innerHTML = message;
+
     return commentCard;
 }
