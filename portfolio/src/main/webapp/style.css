@@ -36,7 +36,7 @@ html {
 #welcome {
     background: linear-gradient(to bottom right, #0066ff 0%, #ff99cc 99%);
     font-color: white;
-    font-family: 'Questrial', sans-serif;
+    font-family: 'Montaga', serif;
     position: relative;
     min-height: 85vh;
     display: flex;
@@ -96,6 +96,7 @@ html {
 .title {
     font-weight: bold;
     font-size: 4em;
+    font-family: 'Montaga', serif;
 }
 
 .presentation {
@@ -182,7 +183,6 @@ blockquote p {
   border-right: .15em solid black; /* The typwriter cursor */
   white-space: nowrap; /* Keeps the content on a single line */
   margin: 0 auto; /* Gives that scrolling effect as the typing happens */
-  letter-spacing: .15em; /* Adjust as needed */
   animation: 
     typing 2.5s steps(40, end),
     blink-caret 1s step-end infinite;
