@@ -93,9 +93,18 @@ function createCommentCard(name, message, pictureLink) {
     var commentCard = document.getElementById("cardCommentTemplate").cloneNode(true);
     commentCard.style.display = "block";
 
+    name = sanitizeString(name);
+    message = sanitizeString(message);
+
     commentCard.getElementsByTagName("img")[0].src = pictureLink;
     commentCard.getElementsByTagName("p")[0].innerHTML = name;
     commentCard.getElementsByTagName("p")[1].innerHTML = message;
 
     return commentCard;
+}
+
+function sanitizeString(string) {
+    string = string.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+    return string;
 }
