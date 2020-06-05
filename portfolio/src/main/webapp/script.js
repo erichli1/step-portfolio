@@ -41,9 +41,12 @@ function seeMore(id) {
 
     const moreId = id + 'More';
     const lessId = id + 'Less';
+    const gifId = id + '-vid';
+    const gifLoc = '/images/' + id +'-vid.gif';
 
     document.getElementById(lessId).style.display = 'none';
     document.getElementById(moreId).style.display = 'block';
+    document.getElementById(gifId).src = gifLoc;
 
 }
 
@@ -57,17 +60,40 @@ function seeLess(id) {
 }
 
 function getComments() {
-    fetch('/data').then(response => response.json()).then((messages) => {
+
+    var numberComments = document.getElementById("number-comments").value;
+    var fetchURL = '/data?number-comments=' + numberComments;
+
+    fetch(fetchURL).then(response => response.json()).then((comments) => {
         const commentsList = document.getElementById('comments-container');
+
+        commentsList.innerHTML = '';
         
-        for(message of messages) {
-            commentsList.appendChild(createListElement(message));
+        for(comment of comments) {
+            commentsList.appendChild(createCommentCard(comment.message, comment.pictureLink));
         }
     });
 }
 
-function createListElement(comment) {
+function deleteComments() {
+    const request = new Request('/delete-data', {method: 'POST'});
+
+    fetch(request).then(response => {
+        getComments();
+    });
+}
+
+function createListElement(message) {
     const listElement = document.createElement('li');
-    listElement.innerText = comment;
+    listElement.innerText = message;
     return listElement;
+}
+
+function createCommentCard(message, pictureLink) {
+    var commentCard = document.getElementById("cardCommentTemplate").cloneNode(true);
+    commentCard.style.display = "block";
+    commentCard.getElementsByTagName("img")[0].src = pictureLink;
+    commentCard.getElementsByTagName("p")[0].innerHTML = message;
+    console.log(commentCard);
+    return commentCard;
 }
