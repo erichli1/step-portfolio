@@ -64,13 +64,13 @@ function getComments() {
     var numberComments = document.getElementById("number-comments").value;
     var fetchURL = '/data?number-comments=' + numberComments;
 
-    fetch(fetchURL).then(response => response.json()).then((messages) => {
+    fetch(fetchURL).then(response => response.json()).then((comments) => {
         const commentsList = document.getElementById('comments-container');
 
         commentsList.innerHTML = '';
         
-        for(message of messages) {
-            commentsList.appendChild(createCommentCard(message));
+        for(comment of comments) {
+            commentsList.appendChild(createCommentCard(comment.message, comment.pictureLink));
         }
     });
 }
@@ -89,9 +89,10 @@ function createListElement(message) {
     return listElement;
 }
 
-function createCommentCard(message) {
+function createCommentCard(message, pictureLink) {
     var commentCard = document.getElementById("cardCommentTemplate").cloneNode(true);
     commentCard.style.display = "block";
+    commentCard.getElementsByTagName("img")[0].src = pictureLink;
     commentCard.getElementsByTagName("p")[0].innerHTML = message;
     console.log(commentCard);
     return commentCard;

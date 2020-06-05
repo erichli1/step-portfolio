@@ -31,10 +31,16 @@
         <div class="" id="contact">
             <h1 class="title">Comments</h1>
             <div class="container" id="comments">
+                Sign your name or leave a drawing!
+                <div class="videoWrapper">
+                    <iframe src="https://www.autodraw.com/" title="AutoDraw"></iframe>
+                </div>
                 <div>
                     <form action="/data" method="POST">
                         <p>Leave a comment!</p>
                         <textarea name="comment-input" class="form-control" rows="3"></textarea>
+                        <p>Navigate to the menu in the top left of the drawing screen and press share. Copy the link and paste it here!</p>
+                        <input type="text" name="picture-link" class="form-control"></input>
                         <br/>
                         <button type="submit" class="btn btn-info">Submit</button>
                     </form>

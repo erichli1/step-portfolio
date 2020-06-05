@@ -21,6 +21,7 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.gson.Gson;
+import com.google.sps.data.Comment;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,12 +34,13 @@ import java.util.ArrayList;
 public class DataServlet extends HttpServlet {
 
   private static final String REQUEST_PARAMETER_COMMENT_INPUT = "comment-input";
+  private static final String REQUEST_PARAMETER_PICTURE_LINK = "picture-link";
   private static final String REQUEST_PARAMETER_NUMBER_COMMENTS = "number-comments";
   private static final String REDIRECT_COMMENTS = "/comments.html";
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    ArrayList<String> messages = new ArrayList<>();
+    ArrayList<Comment> comments = new ArrayList<>();
 
     int numberComments = 0;
     int maxNumberComments = getPositiveInt(request);
@@ -53,7 +55,13 @@ public class DataServlet extends HttpServlet {
     PreparedQuery results = datastore.prepare(query);
     for (Entity entity : results.asIterable()) {
         String message = (String) entity.getProperty("message");
-        messages.add(message);
+        String pictureLink = (String) entity.getProperty("picture");
+        long timestamp = (long) entity.getProperty("timestamp");
+
+        Comment comment = new Comment(message, pictureLink, timestamp);
+        
+        comments.add(comment);
+
         numberComments++;
         if (numberComments == maxNumberComments) {
             break;
@@ -61,7 +69,7 @@ public class DataServlet extends HttpServlet {
     }
 
     Gson gson = new Gson();
-    String json = gson.toJson(messages);
+    String json = gson.toJson(comments);
     
     response.setContentType("application/json");
     response.getWriter().println(json);
@@ -70,17 +78,35 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String message = request.getParameter(REQUEST_PARAMETER_COMMENT_INPUT);
+    String pictureLinkRaw = request.getParameter(REQUEST_PARAMETER_PICTURE_LINK);
+
+    String pictureLink = getPictureLink(pictureLinkRaw);
+
     long timestamp = System.currentTimeMillis();
 
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty("message", message);
     commentEntity.setProperty("timestamp", timestamp);
+    commentEntity.setProperty("picture", pictureLink);
+
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(commentEntity);
 
 
     response.sendRedirect(REDIRECT_COMMENTS);
+  }
+
+  private String getPictureLink(String pictureLinkRaw) {
+    int startOfId = pictureLinkRaw.lastIndexOf("/") + 1;
+    if(startOfId <= pictureLinkRaw.length()) {
+        String pictureLink = "https://storage.googleapis.com/artlab-public.appspot.com/share/" + pictureLinkRaw.substring(startOfId) + ".png";
+    	return pictureLink;
+    }
+    else {
+        return "";
+    }
+
   }
 
   private int getPositiveInt(HttpServletRequest request) {
