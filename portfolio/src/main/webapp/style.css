@@ -33,6 +33,25 @@ html {
     background-color: #fffef2;
 }
 
+#welcome {
+    background: linear-gradient(to bottom right, #0066ff 0%, #ff99cc 99%);
+    font-color: white;
+    font-family: 'Montaga', serif;
+    position: relative;
+    min-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#welcome-content {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+    width: 800px;
+}
+
 .videoWrapper {
   position: relative;
   padding-bottom: 56.25%; /* 16:9 */
@@ -77,6 +96,7 @@ html {
 .title {
     font-weight: bold;
     font-size: 4em;
+    font-family: 'Montaga', serif;
 }
 
 .presentation {
@@ -163,7 +183,6 @@ blockquote p {
   border-right: .15em solid black; /* The typwriter cursor */
   white-space: nowrap; /* Keeps the content on a single line */
   margin: 0 auto; /* Gives that scrolling effect as the typing happens */
-  letter-spacing: .15em; /* Adjust as needed */
   animation: 
     typing 2.5s steps(40, end),
     blink-caret 1s step-end infinite;
@@ -205,4 +224,27 @@ blockquote p {
  polygon.arrow-top {
 	 opacity: 0.5;
 }
+
+#welcome {
+    position: relative;
+}
  
+.custom-shape-divider-bottom-1591387139 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+}
+
+.custom-shape-divider-bottom-1591387139 svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 120px;
+}
+
+.custom-shape-divider-bottom-1591387139 .shape-fill {
+    fill: #FFFEF2;
+}
