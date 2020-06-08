@@ -29,6 +29,9 @@ import java.util.ArrayList;
 @WebServlet("/login")
 public class Login extends HttpServlet {
 
+  private static final String REDIRECT_LOGIN = "/login";
+  private static final String REDIRECT_LOGOUT = "/login";
+  
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     
@@ -36,10 +39,17 @@ public class Login extends HttpServlet {
 
     UserService userService = UserServiceFactory.getUserService();
     if (userService.isUserLoggedIn()) {
-        response.getWriter().println("<p>Logged in.</p>");
+        String logoutUrl = userService.createLoginURL(REDIRECT_LOGOUT);
+        String userEmail = userService.getCurrentUser().getEmail();
+
+        response.getWriter().println("<p>Welcome " + userEmail + "</p>");
+        response.getWriter().println("<p>Logout <a href=\"" + logoutUrl + "\">here</a>.</p>");
     }
     else {
+        String loginUrl = userService.createLoginURL(REDIRECT_LOGIN);
+
         response.getWriter().println("<p>Reveal yourself. Who are you????</p>");
+        response.getWriter().println("<p>Login <a href=\"" + loginUrl + "\">here</a>.</p>");
     }
   }
 }
