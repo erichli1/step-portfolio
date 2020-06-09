@@ -17,7 +17,7 @@ package com.google.sps.servlets;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gson.Gson;
-import com.google.sps.data.Comment;
+import com.google.sps.data.Authentication;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -29,27 +29,37 @@ import java.util.ArrayList;
 @WebServlet("/login")
 public class Login extends HttpServlet {
 
-  private static final String REDIRECT_LOGIN = "/login";
-  private static final String REDIRECT_LOGOUT = "/login";
+  private static final String REDIRECT_LOGIN = "/comments.html";
+  private static final String REDIRECT_LOGOUT = "/comments.html";
   
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+    Authentication auth;
     
-    response.setContentType("text/html");
+    response.setContentType("application/json");
 
     UserService userService = UserServiceFactory.getUserService();
     if (userService.isUserLoggedIn()) {
-        String logoutUrl = userService.createLoginURL(REDIRECT_LOGOUT);
+        String logoutUrl = userService.createLogoutURL(REDIRECT_LOGOUT);
         String userEmail = userService.getCurrentUser().getEmail();
 
-        response.getWriter().println("<p>Welcome " + userEmail + "</p>");
-        response.getWriter().println("<p>Logout <a href=\"" + logoutUrl + "\">here</a>.</p>");
+        auth = new Authentication(true, logoutUrl);
+
+        Gson gson = new Gson();
+        String json = gson.toJson(auth);
+
+        response.getWriter().println(json);
     }
     else {
         String loginUrl = userService.createLoginURL(REDIRECT_LOGIN);
 
-        response.getWriter().println("<p>Reveal yourself. Who are you????</p>");
-        response.getWriter().println("<p>Login <a href=\"" + loginUrl + "\">here</a>.</p>");
+        auth = new Authentication(false, loginUrl);
+
+        Gson gson = new Gson();
+        String json = gson.toJson(auth);
+
+        response.getWriter().println(json);
     }
   }
 }

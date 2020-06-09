@@ -14,6 +14,8 @@
 
 package com.google.sps.servlets;
 
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -57,11 +59,12 @@ public class DataServlet extends HttpServlet {
     for (Entity entity : results.asIterable()) {
         
         String name = (String) entity.getProperty("name");
+        String email = (String) entity.getProperty("email");
         String message = (String) entity.getProperty("message");
         String pictureLink = (String) entity.getProperty("picture");
         long timestamp = (long) entity.getProperty("timestamp");
 
-        Comment comment = new Comment(name, message, pictureLink, timestamp);
+        Comment comment = new Comment(name, email, message, pictureLink, timestamp);
         
         comments.add(comment);
 
@@ -83,6 +86,7 @@ public class DataServlet extends HttpServlet {
     String message = request.getParameter(REQUEST_PARAMETER_COMMENT_INPUT);
     String pictureLinkRaw = request.getParameter(REQUEST_PARAMETER_PICTURE_LINK);
     String name = request.getParameter(REQUEST_PARAMETER_NAME);
+    String email = getEmail();
 
     String pictureLink = getPictureLink(pictureLinkRaw);
 
@@ -90,6 +94,7 @@ public class DataServlet extends HttpServlet {
 
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty("name", name);
+    commentEntity.setProperty("email", email);
     commentEntity.setProperty("message", message);
     commentEntity.setProperty("timestamp", timestamp);
     commentEntity.setProperty("picture", pictureLink);
@@ -100,6 +105,12 @@ public class DataServlet extends HttpServlet {
 
 
     response.sendRedirect(REDIRECT_COMMENTS);
+  }
+
+  private String getEmail() {
+      UserService userService = UserServiceFactory.getUserService();
+
+      return userService.getCurrentUser().getEmail();
   }
 
   private String getPictureLink(String pictureLinkRaw) {
