@@ -61,7 +61,9 @@ function seeLess(id) {
 
 function getComments() {
 
-    var numberComments = document.getElementById("number-comments").value;
+    showForm();
+
+    var numberComments = document.getElementById('number-comments').value;
     var fetchURL = '/data?number-comments=' + numberComments;
 
     fetch(fetchURL).then(response => response.json()).then((comments) => {
@@ -73,6 +75,24 @@ function getComments() {
             commentsList.appendChild(createCommentCard(comment.name, comment.message, comment.pictureLink, comment.timestamp));
         }
     });
+}
+
+function showForm() {
+    fetch('/login').then(response => response.json()).then((login) => {
+        if (login.loggedIn) {
+            document.getElementById('login-text').style.display = 'none';
+            document.getElementById('logout-text').style.display= 'block';
+            document.getElementById('logout-link').href = login.redirectLink;
+            document.getElementById('comment-form').style.display = 'block';
+        }
+        else {
+            document.getElementById('login-text').style.display = 'block';
+            document.getElementById('logout-text').style.display = 'none';
+            document.getElementById('login-link').href = login.redirectLink;
+            document.getElementById('comment-form').style.display = 'none';
+        }
+    });
+
 }
 
 function deleteComments() {

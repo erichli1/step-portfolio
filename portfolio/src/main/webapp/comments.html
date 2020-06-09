@@ -32,23 +32,31 @@
             <h1 class="title">Comment Wall</h1>
             <div class="container" id="comments">
                 <div>
-                    <form action="/data" method="POST">
-                    	<p>What's your name?</p>
-                        <input type="text" name="name" class="form-control"></input>
-                        <p>Sign your name or leave a drawing!</p>
-                        <div class="videoWrapper">
-                            <iframe src="https://www.autodraw.com/" title="AutoDraw"></iframe>
-                        </div>
-                        <br/>
-                        <p>Navigate to the menu in the top left of the drawing screen and press share. Copy the link and paste it here!</p>
-                        <input type="text" name="picture-link" class="form-control"></input>
-                        <br/>
-                        <p>Leave a note with your drawing!</p>
-                        <textarea name="comment-input" class="form-control" rows="3"></textarea>
-                        <br/>
-                        <button type="submit" class="btn btn-info">Submit</button>
-                        <br/>
-                    </form>
+                    <p id="login-text" style="display:none;">
+                        Please log in <a href="#" id="login-link">here</a> to post comments.
+                    </p>
+                    <p id="logout-text" style="display:none;">
+                        Log out <a href="#" id="logout-link">here</a>.
+                    </p>
+                    <div id="comment-form" style="display:none;">
+                        <form action="/data" method="POST">
+                            <p>What's your name?</p>
+                            <input type="text" name="name" class="form-control"></input>
+                            <p>Sign your name or leave a drawing!</p>
+                            <div class="videoWrapper">
+                                <iframe src="https://www.autodraw.com/" title="AutoDraw"></iframe>
+                            </div>
+                            <br/>
+                            <p>Navigate to the menu in the top left of the drawing screen and press share. Copy the link and paste it here!</p>
+                            <input type="text" name="picture-link" class="form-control"></input>
+                            <br/>
+                            <p>Leave a note with your drawing!</p>
+                            <textarea name="comment-input" class="form-control" rows="3"></textarea>
+                            <br/>
+                            <button type="submit" class="btn btn-info">Submit</button>
+                            <br/>
+                        </form>
+                    </div>
                 </div>
                 <br/>
                 <div>
@@ -71,11 +79,11 @@
                     <p></p>
                 </div>
                 <img src="">
-                <div class="card-body card-text">
-                    <p>Test</p>
+                <div class="card-body">
+                    <p class="card-text"></p>
                 </div>
                 <div class="card-footer">
-                    <p></p>
+                    <p class="card-text"></p>
                 </div>
             </div>
         </div>

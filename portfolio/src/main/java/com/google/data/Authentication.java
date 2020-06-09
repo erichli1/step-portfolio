@@ -15,19 +15,13 @@
 package com.google.sps.data;
 
 /** An item on a todo list. */
-public final class Comment {
+public final class Authentication {
 
-  private final String name;
-  private final String email;
-  private final String message;
-  private final String pictureLink;
-  private final long timestamp;
+  private final boolean loggedIn;
+  private final String redirectLink;
 
-  public Comment(String name, String email, String message, String pictureLink, long timestamp) {
-    this.name = name;
-    this.email = email;
-    this.message = message;
-    this.pictureLink = pictureLink;
-    this.timestamp = timestamp;
+  public Authentication(boolean loggedIn, String redirectLink) {
+    this.loggedIn = loggedIn;
+    this.redirectLink = redirectLink;
   }
 }
