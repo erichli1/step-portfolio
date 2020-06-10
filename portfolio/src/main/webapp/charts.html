@@ -28,7 +28,49 @@
   </nav>
   <body id="background">
     <div id="content">
-        <div id="chart-container"></div>
+        <h1 class="title">Year in Review</h1>
+        <div id="timeline-container"></div>
+        <br/>
+        <h1 class="title">Select GoFundMe Donations</h1>
+        <div id="donation-container"></div>
+        <br/>
+        <h1 class="title">Poverty Reduction</h1>
+        <p>Suppose you have $100 to donate to charity, and you want to increase the amount of time girls in East Africa spend in school. There are four charities, each of which do one of the following. Which one do you think will result in the most additional number of years of schooling per $100?</p>
+        <form action="/charity-data" method="POST">
+            <fieldset class="form-group">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadioUniforms" value="Free school uniforms">
+                    <label class="form-check-label" for="gridRadioUniforms">
+                        Free school uniforms
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadioCash" value="Conditional cash transfers">
+                    <label class="form-check-label" for="gridRadioCash">
+                        Cash transfers conditional on attending school
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadioParents" value="Educating parents">
+                    <label class="form-check-label" for="gridRadioParents">
+                        Educating parents about the benefits of education
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadioScholarships" value="Merit scholarships">
+                    <label class="form-check-label" for="gridRadioScholarships">
+                        Merit-based scholarships
+                    </label>
+                </div>
+            </fieldset>
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </form>
+        <br/>
+        <div id="charity-container"></div>
     </div>
   </body>
 </html>
