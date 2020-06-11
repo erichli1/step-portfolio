@@ -28,12 +28,15 @@ import javax.servlet.http.HttpServletResponse;
 public class DonationsDataServlet extends HttpServlet {
 
   private LinkedHashMap<String, Integer> donations = new LinkedHashMap<>();
+  private static final int MAX_CAUSES = 8;
 
   @Override
     public void init() {
-        Scanner scanner = new Scanner(getServletContext().getResourceAsStream("/WEB-INF/donations.csv"));
+        Scanner scanner = new Scanner(getServletContext().getResourceAsStream("/WEB-INF/donations-sorted.csv"));
 
-        while (scanner.hasNextLine()) {
+        int counter = 0;
+
+        while (scanner.hasNextLine() && counter < MAX_CAUSES) {
             String line = scanner.nextLine();
             String[] cells = line.split(",");
 
@@ -41,6 +44,7 @@ public class DonationsDataServlet extends HttpServlet {
             Integer amount = Integer.valueOf(cells[2]);
 
             donations.put(cause, amount);
+            counter++;
         }
 
         scanner.close();
