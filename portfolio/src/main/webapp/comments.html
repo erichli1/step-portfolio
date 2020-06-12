@@ -41,19 +41,23 @@
             <h1 class="title">Comment Wall</h1>
             <div class="container" id="comments">
                 <div>
-                    <p id="login-text" style="display:none;">
-                        Please log in <a href="#" id="login-link">here</a> to post comments.
-                    </p>
-                    <p id="logout-text" style="display:none;">
-                        Log out <a href="#" id="logout-link">here</a>.
-                    </p>
+                    <div class="alert alert-info" role="alert" id="login-text" style="display:none;">
+                        <p>
+                            Please log in <a href="#" id="login-link">here</a> to post comments.
+                        </p>
+                    </div>
+                    <div class="alert alert-info" role="alert" id="logout-text" style="display:none;">
+                        <p>
+                            Log out <a href="#" id="logout-link">here</a>.
+                        </p>
+                    </div>
                     <div id="comment-form" style="display:none;">
                         <form action="/data" method="POST">
                             <p>What's your name?</p>
                             <input type="text" name="name" class="form-control"></input>
                             <p>Sign your name or leave a drawing!</p>
                             <div class="videoWrapper">
-                                <iframe src="https://www.autodraw.com/" title="AutoDraw"></iframe>
+                                <iframe id="autodraw-iframe" title="AutoDraw"></iframe>
                             </div>
                             <br/>
                             <p>Navigate to the menu in the top left of the drawing screen and press share. Copy the link and paste it here!</p>

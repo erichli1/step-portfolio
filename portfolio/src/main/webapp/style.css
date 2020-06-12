@@ -26,6 +26,7 @@ html {
     width: 800px;
     font-color: black;
     font-family: 'Questrial', sans-serif;
+    padding-top: 65px;
 }
 
 #navbar {
@@ -240,23 +241,25 @@ blockquote p {
 #welcome {
     position: relative;
 }
- 
-.custom-shape-divider-bottom-1591387139 {
+
+.custom-shape-divider-bottom-1591989138 {
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
     overflow: hidden;
     line-height: 0;
+    transform: rotate(180deg);
 }
 
-.custom-shape-divider-bottom-1591387139 svg {
+.custom-shape-divider-bottom-1591989138 svg {
     position: relative;
     display: block;
     width: calc(100% + 1.3px);
-    height: 120px;
+    height: 150px;
+    transform: rotateY(180deg);
 }
 
-.custom-shape-divider-bottom-1591387139 .shape-fill {
-    fill: #FFFEF2;
+.custom-shape-divider-bottom-1591989138 .shape-fill {
+    fill: #fffef2;
 }
