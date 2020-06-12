@@ -26,6 +26,7 @@ html {
     width: 800px;
     font-color: black;
     font-family: 'Questrial', sans-serif;
+    padding-top: 65px;
 }
 
 #navbar {
