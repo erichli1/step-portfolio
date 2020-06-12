@@ -2,6 +2,18 @@
   --mainColor: black;
 }
 
+@media (min-width: 992px){
+    .navbar li {
+        margin-left : 0.5em;
+    }
+}
+
+@media (max-width: 991px) {
+	.navbar li {
+        margin-bottom : 0.5em;
+	}
+}
+
 html {
     scroll-behavior: smooth;
 }

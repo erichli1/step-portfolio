@@ -2,6 +2,9 @@ google.charts.load('current', {'packages':['bar', 'timeline']});
 google.charts.setOnLoadCallback(drawTimeline);
 google.charts.setOnLoadCallback(drawDonationGraph);
 google.charts.setOnLoadCallback(drawProgramGraph);
+google.charts.setOnLoadCallback(drawAnswerGraph);
+
+var answerShown = false;
 
 /** Creates a chart and adds it to the page. */
 function drawTimeline() {
@@ -59,4 +62,40 @@ function drawProgramGraph() {
 
         chart.draw(data);
     })
+}
+
+function drawAnswerGraph() {
+    const data = new google.visualization.DataTable();
+    data.addColumn('string', 'Charity');
+    data.addColumn('number', 'Additional Years Per $100');
+    
+    data.addRows([
+        ['Conditional cash transfers', 0.1],
+        ['Merit scholarships', 0.3],
+        ['Free uniforms', 0.7],
+        ['Educating parents', 21]
+    ]);
+
+    document.getElementById('answerCard').style.display = 'block';
+
+    const chart = new google.charts.Bar(document.getElementById('answer-container'));
+    
+    google.visualization.events.addListener(chart, 'ready', function() {
+        document.getElementById('answerCard').style.display = 'none';
+    })
+
+    chart.draw(data);
+}
+
+function showAnswer() {
+    answerShown = !answerShown;
+
+    if (answerShown) {
+        document.getElementById('showAnswerButton').innerHTML = 'Hide answer';
+        document.getElementById('answerCard').style.display = 'block';
+    }
+    else {
+        document.getElementById('showAnswerButton').innerHTML = 'Show answer';
+        document.getElementById('answerCard').style.display = 'none';
+    }
 }
