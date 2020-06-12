@@ -84,11 +84,13 @@ function showForm() {
             document.getElementById('logout-text').style.display= 'block';
             document.getElementById('logout-link').href = login.redirectLink;
             document.getElementById('comment-form').style.display = 'block';
+            document.getElementById('autodraw-iframe').src = "https://www.autodraw.com/";
         }
         else {
             document.getElementById('login-text').style.display = 'block';
             document.getElementById('logout-text').style.display = 'none';
             document.getElementById('login-link').href = login.redirectLink;
+            document.getElementyById('autodraw-iframe').src = "";
             document.getElementById('comment-form').style.display = 'none';
         }
     });
