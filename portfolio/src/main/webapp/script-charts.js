@@ -3,6 +3,8 @@ google.charts.setOnLoadCallback(drawTimeline);
 google.charts.setOnLoadCallback(drawDonationGraph);
 google.charts.setOnLoadCallback(drawProgramGraph);
 
+var answerShown = false;
+
 /** Creates a chart and adds it to the page. */
 function drawTimeline() {
 
@@ -59,4 +61,17 @@ function drawProgramGraph() {
 
         chart.draw(data);
     })
+}
+
+function showAnswer() {
+    answerShown = !answerShown;
+
+    if (answerShown) {
+        document.getElementById('showAnswerButton').innerHTML = 'Hide answer';
+        document.getElementById('answerCard').style.display = 'block';
+    }
+    else {
+        document.getElementById('showAnswerButton').innerHTML = 'Show answer';
+        document.getElementById('answerCard').style.display = 'none';
+    }
 }
