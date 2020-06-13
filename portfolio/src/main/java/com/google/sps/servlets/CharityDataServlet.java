@@ -38,6 +38,7 @@ public class CharityDataServlet extends HttpServlet {
 
     private static final String REDIRECT_CHARTS = "/charts.html";
 
+    // Create an array list of the current number of votes for each program and print as json
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         
@@ -64,9 +65,12 @@ public class CharityDataServlet extends HttpServlet {
         response.getWriter().println(json);
     }
 
+    // Add a vote to the selected program
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String charity = request.getParameter("gridRadios");
+
+        // Check if program was selected
         if (charity != null) {
             DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
@@ -74,6 +78,7 @@ public class CharityDataServlet extends HttpServlet {
 
             Entity programVote;
             
+            // Check if selected program already has votes
             try {
                 programVote = datastore.get(charityKey);
             } catch (EntityNotFoundException e) {
@@ -84,7 +89,8 @@ public class CharityDataServlet extends HttpServlet {
 
             long currentVotes = (long) programVote.getProperty("votes");
 
-            if (currentVotes <= Long.MAX_VALUE - 1) {
+            // Check to make sure adding one won't cause wraparound to negative
+            if (currentVotes != Long.MAX_VALUE) {
                 programVote.setProperty("votes", currentVotes + 1);
                 datastore.put(programVote);
             }
