@@ -123,7 +123,7 @@ public class DataServlet extends HttpServlet {
         int startOfId = pictureLinkRaw.lastIndexOf("/") + 1;
         
         // Check to make sure the string is in bounds
-        if(startOfId <= pictureLinkRaw.length()) {
+        if(startOfId != 0 && startOfId <= pictureLinkRaw.length()) {
             String pictureLink = "https://storage.googleapis.com/artlab-public.appspot.com/share/" + pictureLinkRaw.substring(startOfId) + ".png";
             return pictureLink;
         }
