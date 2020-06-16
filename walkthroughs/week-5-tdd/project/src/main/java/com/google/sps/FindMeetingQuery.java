@@ -15,9 +15,124 @@
 package com.google.sps;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.ArrayList;
 
 public final class FindMeetingQuery {
-  public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-    throw new UnsupportedOperationException("TODO: Implement this method.");
-  }
+    public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
+        // throw new UnsupportedOperationException("TODO: Implement this method.");
+
+        ArrayList<TimeRange> acceptedTimeRanges = new ArrayList<TimeRange>();
+        acceptedTimeRanges.add(TimeRange.WHOLE_DAY);
+
+
+        long duration = request.getDuration();
+        Collection<String> requestedAttendees = request.getAttendees();
+
+        for(Event event : events) {
+            Collection<String> eventAttendees = event.getAttendees();
+
+            // check if there are people who can't make it
+            if(!Collections.disjoint(requestedAttendees, eventAttendees)) {
+                TimeRange eventTimeRange = event.getWhen();
+                
+                for(int index = 0; index < acceptedTimeRanges.size(); index++) {
+                    TimeRange acceptedTimeRange = acceptedTimeRanges.get(index);
+
+                    ArrayList<TimeRange> splicedAcceptedTimeRanges = splice(acceptedTimeRange, eventTimeRange, duration);
+
+                    // add the new accepted times to the list in front of the outdated accepted time range
+                    // should theoretically preserve time ordering of acceptedTimeRanges
+                    for (TimeRange splicedAcceptedTimeRange : splicedAcceptedTimeRanges) {
+                        acceptedTimeRanges.add(index, splicedAcceptedTimeRange);
+                        index++;
+                    }
+
+                    acceptedTimeRanges.remove(index);
+
+                    // index here points to the next element, subtract 1 to account for adding 1 at the end of the loop
+                    index--;
+                }
+                
+            }
+        }
+
+        return acceptedTimeRanges;
+    }
+
+    // returns the new spliced accepted time range after accounting for the event conflicts
+    private ArrayList<TimeRange> splice(TimeRange acceptedTimeRange, TimeRange eventTimeRange, long duration) {
+
+        ArrayList<TimeRange> newAcceptedTimeRanges = new ArrayList<TimeRange>();
+
+        if (acceptedTimeRange.overlaps(eventTimeRange)) {
+            if (acceptedTimeRange.contains(eventTimeRange)) {
+                // check if the two time ranges are the same
+                if (acceptedTimeRange.equals(eventTimeRange)) {
+                    // returns nothing
+                }
+                else {
+                    int acceptedTimeRangeStart = acceptedTimeRange.start();
+                    int eventTimeRangeStart = eventTimeRange.start();
+                    int acceptedTimeRangeEnd = acceptedTimeRange.end();
+                    int eventTimeRangeEnd = eventTimeRange.end();
+
+                    int gap1 = eventTimeRangeStart - acceptedTimeRangeStart;
+                    TimeRange newAcceptedTimeRange1 = TimeRange.fromStartDuration(acceptedTimeRangeStart, gap1);
+                    if(longEnough(newAcceptedTimeRange1, duration)) {
+                        newAcceptedTimeRanges.add(newAcceptedTimeRange1);
+                    }
+
+                    int gap2 = acceptedTimeRangeEnd - eventTimeRangeEnd;
+                    TimeRange newAcceptedTimeRange2 = TimeRange.fromStartDuration(eventTimeRangeEnd, gap2);
+                    if(longEnough(newAcceptedTimeRange2, duration)) {
+                        newAcceptedTimeRanges.add(newAcceptedTimeRange2);
+                    }
+                }
+            }
+            else if (eventTimeRange.contains(acceptedTimeRange)) {
+                // returns nothing
+            }
+            else {
+                int acceptedTimeRangeStart = acceptedTimeRange.start();
+                int eventTimeRangeStart = eventTimeRange.start();
+
+                // only need to account for < or > because if it was ==, then would have been included in contains
+                if (acceptedTimeRangeStart < eventTimeRangeStart) {
+                    int gap = eventTimeRangeStart - acceptedTimeRangeStart;
+                    TimeRange newAcceptedTimeRange = TimeRange.fromStartDuration(acceptedTimeRangeStart, gap);
+
+                    if(longEnough(newAcceptedTimeRange, duration)) {
+                        newAcceptedTimeRanges.add(newAcceptedTimeRange);
+                    }
+                }
+                else {
+                    int acceptedTimeRangeEnd = acceptedTimeRange.end();
+                    int eventTimeRangeEnd = eventTimeRange.end();
+
+                    int gap = acceptedTimeRangeEnd - eventTimeRangeEnd;
+                    TimeRange newAcceptedTimeRange = TimeRange.fromStartDuration(eventTimeRangeEnd, gap);
+
+                    if(longEnough(newAcceptedTimeRange, duration)) {
+                        newAcceptedTimeRanges.add(newAcceptedTimeRange);
+                    }
+                }
+            }
+        }
+        else {
+            newAcceptedTimeRanges.add(acceptedTimeRange);
+        }
+
+        return newAcceptedTimeRanges;
+    }
+
+    // returns true if this time period satisfies the duration requirement
+    private boolean longEnough (TimeRange timeRange, long duration) {
+        if (timeRange.duration() >= (int) duration) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 }
