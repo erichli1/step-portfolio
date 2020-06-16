@@ -27,10 +27,11 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/donations-data")
 public class DonationsDataServlet extends HttpServlet {
 
-  private LinkedHashMap<String, Integer> donations = new LinkedHashMap<>();
-  private static final int MAX_CAUSES = 8;
+    private LinkedHashMap<String, Integer> donations = new LinkedHashMap<>();
+    private static final int MAX_CAUSES = 8;
 
-  @Override
+    // Read the top 8 rows of sorted donation CSV on initialization 
+    @Override
     public void init() {
         Scanner scanner = new Scanner(getServletContext().getResourceAsStream("/WEB-INF/donations-sorted.csv"));
 
@@ -50,7 +51,8 @@ public class DonationsDataServlet extends HttpServlet {
         scanner.close();
 
     }
-  
+    
+    // Print donations data as json
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         

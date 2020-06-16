@@ -29,37 +29,38 @@ import java.util.ArrayList;
 @WebServlet("/login")
 public class Login extends HttpServlet {
 
-  private static final String REDIRECT_LOGIN = "/comments.html";
-  private static final String REDIRECT_LOGOUT = "/comments.html";
-  
-  @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-    Authentication auth;
+    private static final String REDIRECT_LOGIN = "/comments.html";
+    private static final String REDIRECT_LOGOUT = "/comments.html";
     
-    response.setContentType("application/json");
+    // Print json of whether user is logged in and the respective login/logout link
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-    UserService userService = UserServiceFactory.getUserService();
-    if (userService.isUserLoggedIn()) {
-        String logoutUrl = userService.createLogoutURL(REDIRECT_LOGOUT);
-        String userEmail = userService.getCurrentUser().getEmail();
+        Authentication auth;
+        
+        response.setContentType("application/json");
 
-        auth = new Authentication(true, logoutUrl);
+        UserService userService = UserServiceFactory.getUserService();
+        if (userService.isUserLoggedIn()) {
+            String logoutUrl = userService.createLogoutURL(REDIRECT_LOGOUT);
+            String userEmail = userService.getCurrentUser().getEmail();
 
-        Gson gson = new Gson();
-        String json = gson.toJson(auth);
+            auth = new Authentication(true, logoutUrl);
 
-        response.getWriter().println(json);
+            Gson gson = new Gson();
+            String json = gson.toJson(auth);
+
+            response.getWriter().println(json);
+        }
+        else {
+            String loginUrl = userService.createLoginURL(REDIRECT_LOGIN);
+
+            auth = new Authentication(false, loginUrl);
+
+            Gson gson = new Gson();
+            String json = gson.toJson(auth);
+
+            response.getWriter().println(json);
+        }
     }
-    else {
-        String loginUrl = userService.createLoginURL(REDIRECT_LOGIN);
-
-        auth = new Authentication(false, loginUrl);
-
-        Gson gson = new Gson();
-        String json = gson.toJson(auth);
-
-        response.getWriter().println(json);
-    }
-  }
 }

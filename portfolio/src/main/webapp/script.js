@@ -12,31 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * Adds a random quote to the page.
- */
+// Store the displayed quote index
 var lastNum = 0;
 
+// Generate a random quote from list of quotes
 function addRandomQuote() {
-  const quotes =
-      ['The best time to plant a tree is 20 years ago, the second best time is today.', 'Human\'s great skill is their capacity to escalate.', 'As flies to wanton boys, are we to the gods, they kill us for sport.', 'When we are headed the wrong way, the last thing we need is progress.', 'Things don\'t have to be perfect to be wonderful.'];
+    const quotes =
+        ['The best time to plant a tree is 20 years ago, the second best time is today.', 'Human\'s great skill is their capacity to escalate.', 'As flies to wanton boys, are we to the gods, they kill us for sport.', 'When we are headed the wrong way, the last thing we need is progress.', 'Things don\'t have to be perfect to be wonderful.'];
 
-  // Pick a random quote.
-  num = Math.floor(Math.random() * quotes.length);
+    num = Math.floor(Math.random() * quotes.length);
 
-  // check if the last quote is this one
-  while(num == lastNum) {
-      num = Math.floor(Math.random() * quotes.length);
-  }
-  const quote = quotes[Math.floor(Math.random() * quotes.length)];
+    // Check if this quote is already displayed
+    while(num == lastNum) {
+        num = Math.floor(Math.random() * quotes.length);
+    }
+    const quote = quotes[Math.floor(Math.random() * quotes.length)];
 
-  lastNum = num;
+    lastNum = num;
 
-  // Add it to the page.
-  const quoteContainer = document.getElementById('quote-container');
-  quoteContainer.innerText = quote;
+    const quoteContainer = document.getElementById('quote-container');
+    quoteContainer.innerText = quote;
 }
 
+// Show the full card of a "My work" section card
 function seeMore(id) {
 
     const moreId = id + 'More';
@@ -50,6 +48,7 @@ function seeMore(id) {
 
 }
 
+// Hide the full card of a "My work" section card
 function seeLess(id) {
 
     const moreId = id + 'More';
@@ -59,9 +58,14 @@ function seeLess(id) {
     document.getElementById(moreId).style.display = 'none';
 }
 
-function getComments() {
-
+// Show the form and get the comments
+function onLoad() {
     showForm();
+    getComments();
+}
+
+// Get the comments
+function getComments() {
 
     var numberComments = document.getElementById('number-comments').value;
     var fetchURL = '/data?number-comments=' + numberComments;
@@ -69,6 +73,7 @@ function getComments() {
     fetch(fetchURL).then(response => response.json()).then((comments) => {
         const commentsList = document.getElementById('comments-container');
 
+        // Reset the comments to be empty on each call to get fresh comments
         commentsList.innerHTML = '';
         
         for(comment of comments) {
@@ -77,6 +82,7 @@ function getComments() {
     });
 }
 
+// Show the form if logged in
 function showForm() {
     fetch('/login').then(response => response.json()).then((login) => {
         if (login.loggedIn) {
@@ -97,6 +103,7 @@ function showForm() {
 
 }
 
+// Delete all comments for everybody
 function deleteComments() {
     const request = new Request('/delete-data', {method: 'POST'});
 
@@ -105,13 +112,9 @@ function deleteComments() {
     });
 }
 
-function createListElement(message) {
-    const listElement = document.createElement('li');
-    listElement.innerText = message;
-    return listElement;
-}
-
+// Create and return a comment card given the name, comment, picture, and time
 function createCommentCard(name, message, pictureLink, timestamp) {
+    // Get the comment card template from comments.html
     var commentCard = document.getElementById("cardCommentTemplate").cloneNode(true);
 
     name = sanitizeString(name);
@@ -129,6 +132,7 @@ function createCommentCard(name, message, pictureLink, timestamp) {
     return commentCard;
 }
 
+// Sanitize the string to avoid HTML injection
 function sanitizeString(string) {
     string = string.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 

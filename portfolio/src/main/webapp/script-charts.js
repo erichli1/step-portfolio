@@ -4,9 +4,10 @@ google.charts.setOnLoadCallback(drawDonationGraph);
 google.charts.setOnLoadCallback(drawProgramGraph);
 google.charts.setOnLoadCallback(drawAnswerGraph);
 
+// Boolean indicator of whether answer should be shown
 var answerShown = false;
 
-/** Creates a chart and adds it to the page. */
+// Draw timeline of my experiences using hardcoded data
 function drawTimeline() {
 
     const date = new Date();
@@ -17,14 +18,14 @@ function drawTimeline() {
     data.addColumn('string', 'Position')
     data.addColumn('date', 'Start');
     data.addColumn('date', 'End');
-        data.addRows([
-            ['1', 'Intern at Boston Housing Authority', new Date(2020, 2, 20), new Date(2020, 4, 18)],
-            ['1', 'Google STEP Intern', new Date(2020, 4, 18), today],
-            ['2', 'Founder, Head of HCS for Social Good', new Date(2020, 4, 30), today],
-            ['3', 'CTO of Global Research and Consulting', new Date(2020, 4, 3), today],
-            ['4', 'Operations and Engagement Lead of Harvard Effective Altruism', new Date(2020, 4, 31), today],
-        ]);
-
+    data.addRows([
+        ['Row 1', 'Intern at Boston Housing Authority', new Date(2020, 2, 20), new Date(2020, 4, 18)],
+        ['Row 1', 'Google STEP Intern', new Date(2020, 4, 18), today],
+        ['Row 2', 'Founder, Head of HCS for Social Good', new Date(2020, 4, 30), today],
+        ['Row 3', 'CTO of Global Research and Consulting', new Date(2020, 4, 3), today],
+        ['Row 4', 'Operations and Engagement Lead of Harvard Effective Altruism', new Date(2020, 4, 31), today],
+    ]);
+    
     var options = {
         timeline: { showRowLabels: false }
     };
@@ -33,6 +34,7 @@ function drawTimeline() {
     chart.draw(data, options);
 }
 
+// Show the most donated to causes by pulling CSV data
 function drawDonationGraph() {
     fetch('/donations-data').then(response => response.json()).then((donations) => {
         const data = new google.visualization.DataTable();
@@ -48,6 +50,7 @@ function drawDonationGraph() {
     });
 }
 
+// Show the votes on which program is the most effective
 function drawProgramGraph() {
     fetch('/charity-data').then(response => response.json()).then((charities) => {
         const data = new google.visualization.DataTable();
@@ -64,6 +67,7 @@ function drawProgramGraph() {
     })
 }
 
+// Show the efficacy analysis graph using hardcoded data
 function drawAnswerGraph() {
     const data = new google.visualization.DataTable();
     data.addColumn('string', 'Charity');
@@ -76,10 +80,12 @@ function drawAnswerGraph() {
         ['Educating parents', 21]
     ]);
 
+    // Show the element so the graph can be generated correctly
     document.getElementById('answerCard').style.display = 'block';
 
     const chart = new google.charts.Bar(document.getElementById('answer-container'));
     
+    // Hide the graph once generated
     google.visualization.events.addListener(chart, 'ready', function() {
         document.getElementById('answerCard').style.display = 'none';
     })
@@ -87,6 +93,7 @@ function drawAnswerGraph() {
     chart.draw(data);
 }
 
+// Show/hide the correct answer and graph
 function showAnswer() {
     answerShown = !answerShown;
 
