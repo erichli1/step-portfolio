@@ -26,6 +26,10 @@ public final class FindMeetingQuery {
         long duration = request.getDuration();
         Collection<String> requestedAttendees = request.getAttendees();
 
+        if (longEnough(TimeRange.WHOLE_DAY, duration)) {
+            acceptedTimeRanges.add(TimeRange.WHOLE_DAY);
+        }
+
         for(Event event : events) {
             Collection<String> eventAttendees = event.getAttendees();
 
