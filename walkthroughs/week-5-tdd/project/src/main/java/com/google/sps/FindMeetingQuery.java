@@ -20,11 +20,14 @@ import java.util.ArrayList;
 
 public final class FindMeetingQuery {
     public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-        // throw new UnsupportedOperationException("TODO: Implement this method.");
-
         ArrayList<TimeRange> acceptedTimeRanges = new ArrayList<TimeRange>();
         long duration = request.getDuration();
         Collection<String> requestedAttendees = request.getAttendees();
+        Collection<String> optionalAttendees = request.getOptionalAttendees();
+
+        ArrayList<Event> optionalEvents = new ArrayList<Event>();
+
+        boolean mandatoryFlag = false;
 
         if (longEnough(TimeRange.WHOLE_DAY, duration)) {
             acceptedTimeRanges.add(TimeRange.WHOLE_DAY);
@@ -32,18 +35,17 @@ public final class FindMeetingQuery {
 
         for(Event event : events) {
             Collection<String> eventAttendees = event.getAttendees();
+            TimeRange eventTimeRange = event.getWhen();
 
             // check if there are people who can't make it
             if(!Collections.disjoint(requestedAttendees, eventAttendees)) {
-                TimeRange eventTimeRange = event.getWhen();
-                
+                mandatoryFlag = true;
                 for(int index = 0; index < acceptedTimeRanges.size(); index++) {
                     TimeRange acceptedTimeRange = acceptedTimeRanges.get(index);
 
                     ArrayList<TimeRange> splicedAcceptedTimeRanges = splice(acceptedTimeRange, eventTimeRange, duration);
 
                     // add the new accepted times to the list in front of the outdated accepted time range
-                    // should theoretically preserve time ordering of acceptedTimeRanges
                     for (TimeRange splicedAcceptedTimeRange : splicedAcceptedTimeRanges) {
                         acceptedTimeRanges.add(index, splicedAcceptedTimeRange);
                         index++;
@@ -56,9 +58,49 @@ public final class FindMeetingQuery {
                 }
                 
             }
+            // adds to optional events list if includes optional events
+            else if(!Collections.disjoint(optionalAttendees, eventAttendees)) {
+                optionalEvents.add(event);
+            }
+            else {
+                // do nothing
+            }
         }
 
-        return acceptedTimeRanges;
+        ArrayList<TimeRange> optionalTimeRanges = deepCopy(acceptedTimeRanges);
+
+        // iterate through same process on completely accepted time ranges for the stored optional events
+        for(Event event : optionalEvents) {
+            Collection<String> eventAttendees = event.getAttendees();
+            TimeRange eventTimeRange = event.getWhen();
+
+            for(int index = 0; index < optionalTimeRanges.size(); index++) {
+                TimeRange optionalTimeRange = optionalTimeRanges.get(index);
+
+                ArrayList<TimeRange> splicedOptionalTimeRanges = splice(optionalTimeRange, eventTimeRange, duration);
+
+                for (TimeRange splicedOptionalTimeRange : splicedOptionalTimeRanges) {
+                    optionalTimeRanges.add(index, splicedOptionalTimeRange);
+                    index++;
+                }
+
+                optionalTimeRanges.remove(index);
+
+                index--;
+            }
+        }
+
+        System.out.println("SIZE: " + optionalTimeRanges.size());
+
+        // check if there are any time slots that also fit the optional people
+        // also will return the optional time ranges if there are no mandatory conflicting events
+        if (optionalTimeRanges.size() != 0 || !mandatoryFlag) {
+            return optionalTimeRanges;
+        }
+        else {
+            System.out.println("hello?");
+            return acceptedTimeRanges;
+        }
     }
 
     // returns the new spliced accepted time range after accounting for the event conflicts
@@ -156,5 +198,16 @@ public final class FindMeetingQuery {
         else {
             return false;
         }
+    }
+
+    // returns a deep copy of the array list
+    private ArrayList<TimeRange> deepCopy(ArrayList<TimeRange> timeRanges) {
+        // create new time range array
+        ArrayList<TimeRange> newTimeRanges = new ArrayList<TimeRange>(timeRanges.size());
+        for (TimeRange timeRange : timeRanges) {
+            newTimeRanges.add(timeRange);
+        }
+
+        return newTimeRanges;
     }
 }
