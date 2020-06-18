@@ -20,18 +20,13 @@ import java.util.ArrayList;
 
 public final class FindMeetingQuery {
     public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-        ArrayList<TimeRange> acceptedTimeRanges = new ArrayList<TimeRange>();
         long duration = request.getDuration();
         Collection<String> requestedAttendees = request.getAttendees();
         Collection<String> optionalAttendees = request.getOptionalAttendees();
 
-        ArrayList<Event> optionalEvents = new ArrayList<Event>();
-
         boolean mandatoryFlag = false;
-
-        if (longEnough(TimeRange.WHOLE_DAY, duration)) {
-            acceptedTimeRanges.add(TimeRange.WHOLE_DAY);
-        }
+        ArrayList<TimeRange> busyTimeRanges = new ArrayList<TimeRange>();
+        ArrayList<TimeRange> optionalBusyTimeRanges = new ArrayList<TimeRange>();
 
         for(Event event : events) {
             Collection<String> eventAttendees = event.getAttendees();
@@ -39,155 +34,102 @@ public final class FindMeetingQuery {
 
             // check if there are people who can't make it
             if(!Collections.disjoint(requestedAttendees, eventAttendees)) {
+                // mark that there is at least one event by a mandatory attendee
                 mandatoryFlag = true;
-                for(int index = 0; index < acceptedTimeRanges.size(); index++) {
-                    TimeRange acceptedTimeRange = acceptedTimeRanges.get(index);
 
-                    ArrayList<TimeRange> splicedAcceptedTimeRanges = splice(acceptedTimeRange, eventTimeRange, duration);
-
-                    // add the new accepted times to the list in front of the outdated accepted time range
-                    for (TimeRange splicedAcceptedTimeRange : splicedAcceptedTimeRanges) {
-                        acceptedTimeRanges.add(index, splicedAcceptedTimeRange);
-                        index++;
-                    }
-
-                    acceptedTimeRanges.remove(index);
-
-                    // index here points to the next element, subtract 1 to account for adding 1 at the end of the loop
-                    index--;
-                }
-                
+                busyTimeRanges.add(eventTimeRange);
+                optionalBusyTimeRanges.add(eventTimeRange);
             }
             // adds to optional events list if includes optional events
             else if(!Collections.disjoint(optionalAttendees, eventAttendees)) {
-                optionalEvents.add(event);
+                optionalBusyTimeRanges.add(eventTimeRange);
             }
             else {
                 // do nothing
             }
         }
 
-        ArrayList<TimeRange> optionalTimeRanges = deepCopy(acceptedTimeRanges);
+        // merges and sorts the busy time ranges
+        busyTimeRanges = updateBusyTimeRanges(busyTimeRanges);
+        optionalBusyTimeRanges = updateBusyTimeRanges(optionalBusyTimeRanges);
 
-        // iterate through same process on completely accepted time ranges for the stored optional events
-        for(Event event : optionalEvents) {
-            Collection<String> eventAttendees = event.getAttendees();
-            TimeRange eventTimeRange = event.getWhen();
-
-            for(int index = 0; index < optionalTimeRanges.size(); index++) {
-                TimeRange optionalTimeRange = optionalTimeRanges.get(index);
-
-                ArrayList<TimeRange> splicedOptionalTimeRanges = splice(optionalTimeRange, eventTimeRange, duration);
-
-                for (TimeRange splicedOptionalTimeRange : splicedOptionalTimeRanges) {
-                    optionalTimeRanges.add(index, splicedOptionalTimeRange);
-                    index++;
-                }
-
-                optionalTimeRanges.remove(index);
-
-                index--;
-            }
-        }
-
-        System.out.println("SIZE: " + optionalTimeRanges.size());
-
-        // check if there are any time slots that also fit the optional people
-        // also will return the optional time ranges if there are no mandatory conflicting events
-        if (optionalTimeRanges.size() != 0 || !mandatoryFlag) {
-            return optionalTimeRanges;
+        ArrayList<TimeRange> freeTimeRanges = getFreeTimeRanges(busyTimeRanges, duration);
+        ArrayList<TimeRange> optionalFreeTimeRanges = getFreeTimeRanges(optionalBusyTimeRanges, duration);
+        
+        // uses the optional free time ranges if there are free options for mandatory & optional attendees OR were no events for mandatory attendee
+        if(optionalFreeTimeRanges.size() != 0 || !mandatoryFlag) {
+            return optionalFreeTimeRanges;
         }
         else {
-            System.out.println("hello?");
-            return acceptedTimeRanges;
+            return freeTimeRanges;
         }
     }
 
-    // returns the new spliced accepted time range after accounting for the event conflicts
-    private ArrayList<TimeRange> splice(TimeRange acceptedTimeRange, TimeRange eventTimeRange, long duration) {
+    // returns list of free time ranges in a day given list of busy times
+    private ArrayList<TimeRange> getFreeTimeRanges(ArrayList<TimeRange> busyTimeRanges, long duration) {
+        ArrayList<TimeRange> freeTimeRanges = new ArrayList<TimeRange>();
 
-        ArrayList<TimeRange> newAcceptedTimeRanges = new ArrayList<TimeRange>();
+        int startTime = TimeRange.START_OF_DAY;
 
-        if (acceptedTimeRange.overlaps(eventTimeRange)) {
-            // accounts for when event includes accepted (as well as when equals)
-            if (eventTimeRange.contains(acceptedTimeRange)) {
-                newAcceptedTimeRanges = spliceContainsAccepted(acceptedTimeRange, eventTimeRange, duration);
+        // busy time ranges should be sorted by start time
+        for(TimeRange busyTimeRange : busyTimeRanges) {
+            TimeRange timeRange = TimeRange.fromStartEnd(startTime, busyTimeRange.start(), false);
+            if(longEnough(timeRange, duration)) {
+                freeTimeRanges.add(timeRange);
             }
-            else if (acceptedTimeRange.contains(eventTimeRange)) {
-                newAcceptedTimeRanges = spliceContainsEvent(acceptedTimeRange, eventTimeRange, duration);
+            startTime = busyTimeRange.end();
+        }       
+
+        // adds the last chunk of the day in because there's no event at the end of the day
+        TimeRange lastTimeRange = TimeRange.fromStartEnd(startTime, TimeRange.END_OF_DAY, true);
+        if(longEnough(lastTimeRange, duration)) {
+            freeTimeRanges.add(lastTimeRange);
+        }
+
+        return freeTimeRanges;
+    }
+
+    // merges and sorts the time ranges into disjoint time ranges
+    private ArrayList<TimeRange> updateBusyTimeRanges(ArrayList<TimeRange> busyTimeRanges) {
+        // sort time ranges by start time
+        Collections.sort(busyTimeRanges, TimeRange.ORDER_BY_START);
+
+        int index = 0;
+        while(index < busyTimeRanges.size() - 1) {
+            TimeRange currBusyTimeRange = busyTimeRanges.get(index);
+            TimeRange nextBusyTimeRange = busyTimeRanges.get(index + 1);
+            
+            // if overlap, combine current and next and put index on merged
+            if(currBusyTimeRange.overlaps(nextBusyTimeRange)) {
+                TimeRange mergedBusyTimeRange = mergeTimeRanges(currBusyTimeRange, nextBusyTimeRange);
+                busyTimeRanges.set(index, mergedBusyTimeRange);
+                busyTimeRanges.remove(index + 1);
             }
+            // if no overlap, move index to next
             else {
-                newAcceptedTimeRanges = spliceOverlap(acceptedTimeRange, eventTimeRange, duration);
+                // moves the index to compare next with next next
+                index++;
             }
         }
+
+        return busyTimeRanges;
+    }
+
+    // merges two time ranges that overlap
+    private TimeRange mergeTimeRanges(TimeRange currBusyTimeRange, TimeRange nextBusyTimeRange) {
+        // current contains next
+        if (currBusyTimeRange.contains(nextBusyTimeRange)) {
+            return currBusyTimeRange;
+        }
+        // next contains current
+        else if (nextBusyTimeRange.contains(currBusyTimeRange)) {
+            return nextBusyTimeRange;
+        }
+        // pure overlap, currBusy will start before nextBusy because they've been sorted by start time in updateBusyTimeRanges()
         else {
-            newAcceptedTimeRanges.add(acceptedTimeRange);
+            TimeRange mergedBusyTimeRange = TimeRange.fromStartEnd(currBusyTimeRange.start(), nextBusyTimeRange.end(), false);
+            return mergedBusyTimeRange;
         }
-
-        return newAcceptedTimeRanges;
-    }
-
-    // splice time if event contains accepted
-    private ArrayList<TimeRange> spliceContainsAccepted (TimeRange acceptedTimeRange, TimeRange eventTimeRange, long duration) {
-        ArrayList<TimeRange> newAcceptedTimeRanges = new ArrayList<TimeRange>();
-
-        return newAcceptedTimeRanges;
-    }
-
-
-    // splice time if accepted contains event
-    private ArrayList<TimeRange> spliceContainsEvent(TimeRange acceptedTimeRange, TimeRange eventTimeRange, long duration) {
-        ArrayList<TimeRange> newAcceptedTimeRanges = new ArrayList<TimeRange>();
-        
-        int acceptedTimeRangeStart = acceptedTimeRange.start();
-        int eventTimeRangeStart = eventTimeRange.start();
-        int acceptedTimeRangeEnd = acceptedTimeRange.end();
-        int eventTimeRangeEnd = eventTimeRange.end();
-
-        int gap1 = eventTimeRangeStart - acceptedTimeRangeStart;
-        TimeRange newAcceptedTimeRange1 = TimeRange.fromStartDuration(acceptedTimeRangeStart, gap1);
-        if(longEnough(newAcceptedTimeRange1, duration)) {
-            newAcceptedTimeRanges.add(newAcceptedTimeRange1);
-        }
-
-        int gap2 = acceptedTimeRangeEnd - eventTimeRangeEnd;
-        TimeRange newAcceptedTimeRange2 = TimeRange.fromStartDuration(eventTimeRangeEnd, gap2);
-        if(longEnough(newAcceptedTimeRange2, duration)) {
-            newAcceptedTimeRanges.add(newAcceptedTimeRange2);
-        }
-
-        return newAcceptedTimeRanges;
-    }
-
-    // splice time if just overlaps, doesn't satisfy contain
-    private ArrayList<TimeRange> spliceOverlap(TimeRange acceptedTimeRange, TimeRange eventTimeRange, long duration) {
-        ArrayList<TimeRange> newAcceptedTimeRanges = new ArrayList<TimeRange>();
-        
-        int acceptedTimeRangeStart = acceptedTimeRange.start();
-        int eventTimeRangeStart = eventTimeRange.start();
-
-        // only need to account for < or > because == would satisfy contains
-        if (acceptedTimeRangeStart < eventTimeRangeStart) {
-            int gap = eventTimeRangeStart - acceptedTimeRangeStart;
-            TimeRange newAcceptedTimeRange = TimeRange.fromStartDuration(acceptedTimeRangeStart, gap);
-
-            if(longEnough(newAcceptedTimeRange, duration)) {
-                newAcceptedTimeRanges.add(newAcceptedTimeRange);
-            }
-        }
-        else {
-            int acceptedTimeRangeEnd = acceptedTimeRange.end();
-            int eventTimeRangeEnd = eventTimeRange.end();
-
-            int gap = acceptedTimeRangeEnd - eventTimeRangeEnd;
-            TimeRange newAcceptedTimeRange = TimeRange.fromStartDuration(eventTimeRangeEnd, gap);
-
-            if(longEnough(newAcceptedTimeRange, duration)) {
-                newAcceptedTimeRanges.add(newAcceptedTimeRange);
-            }
-        }
-
-        return newAcceptedTimeRanges;
     }
 
     // returns true if this time period satisfies the duration requirement
@@ -198,16 +140,5 @@ public final class FindMeetingQuery {
         else {
             return false;
         }
-    }
-
-    // returns a deep copy of the array list
-    private ArrayList<TimeRange> deepCopy(ArrayList<TimeRange> timeRanges) {
-        // create new time range array
-        ArrayList<TimeRange> newTimeRanges = new ArrayList<TimeRange>(timeRanges.size());
-        for (TimeRange timeRange : timeRanges) {
-            newTimeRanges.add(timeRange);
-        }
-
-        return newTimeRanges;
     }
 }
